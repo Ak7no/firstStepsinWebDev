@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}Buchung überprüfen{% endblock %}
+{% block content %}
+<style>
+    /* Video Hintergrund */
+    .video-bg-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: -1;
+    }
+    
+    .video-bg-container video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        transform: translate(-50%, -50%);
+        object-fit: cover;
+    }
+    
+    .video-bg-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+    }
+    
+    /* Content über dem Video */
+    .content-wrapper {
+        position: relative;
+        z-index: 1;
+        min-height: 100vh;
+    }
+    
+    /* Cards und Progress mit leichter Transparenz */
+    .card, .progress {
+        background: rgba(255, 255, 255, 0.95);
+    }
+    
+    .progress {
+        background: rgba(255, 255, 255, 0.3);
+    }
+    
+    h2 {
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+</style>
+
+<!-- Video Hintergrund -->
+<div class="video-bg-container">
+    <video autoplay muted loop playsinline>
+        <source src="{{ url_for('static', filename='primVid.mp4') }}" type="video/mp4">
+        Dein Browser unterstützt kein HTML5 Video.
+    </video>
+    <div class="video-bg-overlay"></div>
+</div>
+
+<!-- Content über dem Video -->
+<div class="content-wrapper">
+    <div class="container mt-4">
+        <div class="progress mb-4">
+            <div class="progress-bar" role="progressbar" style="width: 100%">Buchung überprüfen</div>
+        </div>
+        
+        <h2>Ihre Buchungsdetails</h2>
+        
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">{{ hotel.name }}</h5>
+                <p><strong>Check-in:</strong> {{ booking_data.checkin }}</p>
+                <p><strong>Check-out:</strong> {{ booking_data.checkout }}</p>
+                <p><strong>Gäste:</strong> {{ booking_data.num_guests }}</p>
+                <p><strong>Zimmertyp:</strong> {{ booking_data.room_type }}</p>
+                {% if booking_data.special_requests %}
+                <p><strong>Besondere Wünsche:</strong> {{ booking_data.special_requests }}</p>
+                {% endif %}
+                <p><strong>€/night:</strong> €{{ hotel.price_per_night }}</p>
+            </div>
+        </div>
+        
+        <form method="POST" action="{{ url_for('views.booking_review', hotel_id=hotel.id) }}">
+            <button type="submit" class="btn btn-success">Jetzt verbindlich buchen</button>
+            <a href="{{ url_for('views.booking_step1', hotel_id=hotel.id) }}" class="btn btn-secondary">Zurück bearbeiten</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
