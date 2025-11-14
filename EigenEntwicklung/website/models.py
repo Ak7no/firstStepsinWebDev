@@ -28,9 +28,14 @@ class Hotel(db.Model):
     description = db.Column(db.Text)
     price_per_night = db.Column(db.Integer)
     description_long = db.Column(db.Text)
-    service_details = db.Column(db.Text)  # New field for hotel services and amenities
+    service_details = db.Column(db.Text)  
     latitude = db.Column(db.Float)
     longtitude = db.Column(db.Float)
+    hotel_email = db.Column(db.String(150))
+    hotel_phone = db.Column(db.String(50))
+    hotel_website = db.Column(db.String(200))
+    hotel_street = db.Column(db.String(200))
+    
     
 
 class Reservation(db.Model):
