@@ -71,7 +71,9 @@ def booking_step1(hotel_id):
         
         checkin_date = request.form.get('checkin')
         checkout_date = request.form.get('checkout')
-        num_guests = request.form.get('num_guests')
+        num_children = request.form.get('num_children', 0)
+        num_adults = request.form.get('num_adults', 1)
+        num_guests = int(num_children) + int(num_adults)
         
         print(f"📅 Check-in: {checkin_date}")
         print(f"📅 Check-out: {checkout_date}")
@@ -82,7 +84,9 @@ def booking_step1(hotel_id):
             'hotel_id': hotel_id,
             'checkin': checkin_date,
             'checkout': checkout_date,
-            'num_guests': num_guests
+            'num_children': num_children,
+            'num_adults': num_adults
+            
         }
         
         print(f"💾 Session gespeichert: {session['booking_data']}")
@@ -113,7 +117,9 @@ def booking_step2(hotel_id):
     num_guests = int(booking_data.get('num_guests', 1))
     checkin = booking_data.get('checkin')
     checkout = booking_data.get('checkout')
-    
+    num_guests_adult = booking_data.get('num_adults')
+    num_guests_child = booking_data.get('num_children')
+    num_guests = int(num_guests_adult) + int(num_guests_child)
     if request.method == 'POST':
         print("POST Request in booking_step2")
         
@@ -124,7 +130,8 @@ def booking_step2(hotel_id):
                 user_id=current_user.id,
                 checkin_date=datetime.strptime(checkin, '%Y-%m-%d').date(),      # ← Hier umwandeln!
                 checkout_date=datetime.strptime(checkout, '%Y-%m-%d').date(),    # ← Hier umwandeln!
-                num_guests=num_guests,
+                num_guests_adult=int(num_guests_adult),
+                num_guests_child=int(num_guests_child),
                 special_requests=request.form.get('special_requests', ''),
                 status='pending'
             )

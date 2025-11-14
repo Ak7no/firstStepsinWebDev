@@ -111,11 +111,11 @@
                     <a href="{{ url_for('views.booking_detail', hotel_id=hotel.id) }}" class="hotel-card rounded p-3">
                         <div class="d-flex justify-content-between align-items-start mb-2">
                             <h5 class="mb-0 text-dark">{{ hotel.name }}</h5>
-                            <span class="badge bg-primary">{{ hotel.city }}</span>
+                            <!--span class="badge bg-primary">{{ hotel.city }}</span-->
                         </div>
                         
                         <p class="text-muted mb-3"> 
-                            {{ hotel.description or 'Gemütliches Hotel in bester Lage' }}
+                            {{ hotel.description }}
                         </p>
                         
                         <div class="d-flex justify-content-between align-items-center">

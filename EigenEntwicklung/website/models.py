@@ -27,6 +27,11 @@ class Hotel(db.Model):
     city = db.Column(db.String(100))
     description = db.Column(db.Text)
     price_per_night = db.Column(db.Integer)
+    description_long = db.Column(db.Text)
+    service_details = db.Column(db.Text)  # New field for hotel services and amenities
+    latitude = db.Column(db.Float)
+    longtitude = db.Column(db.Float)
+    
 
 class Reservation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -43,7 +48,8 @@ class Booking(db.Model):
     hotel_id = db.Column(db.Integer, db.ForeignKey('hotel.id'), nullable=False)
     checkin_date = db.Column(db.Date, nullable=False)      # ← WICHTIG
     checkout_date = db.Column(db.Date, nullable=False)     # ← WICHTIG
-    num_guests = db.Column(db.Integer, nullable=False)
+    num_guests_adult = db.Column(db.Integer, nullable=False)
+    num_guests_child = db.Column(db.Integer)
     special_requests = db.Column(db.Text)
     status = db.Column(db.String(20), default='pending')
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
