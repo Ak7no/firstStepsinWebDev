@@ -27,6 +27,9 @@ class Hotel(db.Model):
     city = db.Column(db.String(100))
     description = db.Column(db.Text)
     price_per_night = db.Column(db.Integer)
+    price_per_night_u1 = db.Column(db.Integer)
+    price_per_night_u2 = db.Column(db.Integer)
+    price_per_night_u3 = db.Column(db.Integer)
     description_long = db.Column(db.Text)
     service_details = db.Column(db.Text)  
     latitude = db.Column(db.Float)
@@ -35,7 +38,7 @@ class Hotel(db.Model):
     hotel_phone = db.Column(db.String(50))
     hotel_website = db.Column(db.String(200))
     hotel_street = db.Column(db.String(200))
-    
+
     
 
 class Reservation(db.Model):
@@ -58,6 +61,7 @@ class Booking(db.Model):
     special_requests = db.Column(db.Text)
     status = db.Column(db.String(20), default='pending')
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    total_price = db.Column(db.Integer)
 
 class Guest(db.Model):
     id = db.Column(db.Integer, primary_key=True)

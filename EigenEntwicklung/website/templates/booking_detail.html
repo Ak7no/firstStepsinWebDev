@@ -277,11 +277,13 @@
                     
                     <!-- Hotel-Informationen -->
                     <div class="card mb-3">
+                      <div class="card-header">
+                            <h6 class="mb-0"><strong>Hotel-Informationen</strong></h6>
+                          </div>
                         <div class="card-body">
-                            <h5 class="card-title"><strong>Hotel-Informationen</strong></h5>
                             <p class="mb-2"><strong>Ort:</strong> {{ hotel.city }}</p>
                             <p class="mb-2"><strong>Adresse:</strong> {{ hotel.hotel_street }}</p>
-                            <p class="mb2"><strong>Sterne rating:</strong>⭐⭐⭐⭐⭐</p>
+                            <p class="mb-2"><strong>Sterne rating:</strong>⭐⭐⭐⭐⭐</p>
                             <p class="mb-2"><strong>Preis pro Nacht:</strong> €{{ hotel.price_per_night }}</p>
                             
                             <div class="descriptionbox">
@@ -393,7 +395,7 @@
                               <p> Bei bestehenden Fragen zu unseren Angebotenen Services, zögen Sie nicht und kontaktieren Sie unser Support-Team für weitere Informationen oder spezielle Anfragen.</p>
                               <p>✉️: {{hotel.hotel_email}}</p>
                               <p>☎️: {{hotel.hotel_phone}}</p>
-                              <p>Falls Sie nach weiteren Allgemeinen Informationen suchen, klicken Sie bitte hier:
+                              <p>Falls Sie nach weiteren Allgemeinen Informationen suchen oder nach bestimmten Events, klicken Sie bitte hier:
                              </p>
                               <a href={{hotel.hotel_website}} class="btn-hotel-website">
                                    {{hotel.name}} Webseite

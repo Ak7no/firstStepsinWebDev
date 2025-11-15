@@ -61,7 +61,7 @@ def booking_search():
     
     return render_template("booking_search.html", user=current_user)
 
-@views.route('/booking/<int:hotel_id>/step1', methods=['GET', 'POST']) # Buchung Schritt 1
+@views.route('/booking/<int:hotel_id>/step1', methods=['GET', 'POST'])
 @login_required
 def booking_step1(hotel_id):
     hotel = Hotel.query.get_or_404(hotel_id)
@@ -71,75 +71,102 @@ def booking_step1(hotel_id):
         
         checkin_date = request.form.get('checkin')
         checkout_date = request.form.get('checkout')
+        total_price = request.form.get('total_price')  # ← Vom Frontend
         num_children = request.form.get('num_children', 0)
         num_adults = request.form.get('num_adults', 1)
+        room_type = request.form.get('room_type')  # ← WICHTIG!
+        
+        # ✅ VALIDIERUNG
+        try:
+            total_price = float(total_price)
+            if total_price <= 0:
+                flash("❌ Ungültiger Preis!", "error")
+                return redirect(url_for('views.booking_step1', hotel_id=hotel_id))
+        except (ValueError, TypeError):
+            flash("❌ Preisberechnung fehlgeschlagen!", "error")
+            return redirect(url_for('views.booking_step1', hotel_id=hotel_id))
+        
         num_guests = int(num_children) + int(num_adults)
         
-        print(f"📅 Check-in: {checkin_date}")
-        print(f"📅 Check-out: {checkout_date}")
-        print(f"👥 Gäste: {num_guests}")
-        
-        # Speichere in Session
+        # ✅ SESSION speichern
         session['booking_data'] = {
             'hotel_id': hotel_id,
             'checkin': checkin_date,
             'checkout': checkout_date,
             'num_children': num_children,
-            'num_adults': num_adults
-            
+            'num_adults': num_adults,
+            'room_type': room_type,
+            'total_price': total_price  # ← GESPEICHERT!
         }
         
         print(f"💾 Session gespeichert: {session['booking_data']}")
-        
-        redirect_url = url_for('views.booking_step2', hotel_id=hotel_id)
-        print(f"🔀 Redirect zu: {redirect_url}")
-
-        
-        return redirect(redirect_url)
+        return redirect(url_for('views.booking_step2', hotel_id=hotel_id))
     
-    print(f"📄 GET Request - Zeige booking_step1.html für Hotel {hotel_id}")
     return render_template('booking_step1.html', user=current_user, hotel=hotel)
 
-@views.route('/booking/<int:hotel_id>/step2', methods=['GET', 'POST']) # Buchung Schritt 2
-@login_required
+
+from datetime import datetime
+
+def parse_date_flexible(date_string):
+    """Versucht, das Datum in verschiedenen Formaten zu parsen"""
+    if not date_string:
+        return None
+    
+    formats = [
+        '%Y-%m-%d',      # ISO: 2025-11-01
+        '%d.%m.%Y',      # Deutsch: 01.11.2025
+        '%d/%m/%Y',      # Alternative: 01/11/2025
+        '%Y/%m/%d',      # Alternative: 2025/11/01
+    ]
+    
+    for fmt in formats:
+        try:
+            return datetime.strptime(date_string, fmt).date()
+        except ValueError:
+            continue
+    
+    raise ValueError(f"Datum '{date_string}' konnte nicht geparst werden")
+
+
+@views.route('/booking/<int:hotel_id>/step2', methods=['GET', 'POST'])
 @login_required
 def booking_step2(hotel_id):
     print(f"booking_step2 aufgerufen - Method: {request.method}")
     hotel = Hotel.query.get_or_404(hotel_id)
     
-    # Prüfe ob booking_data existiert
     if 'booking_data' not in session:
         print("Keine booking_data in Session gefunden!")
         flash("Bitte starte die Buchung von vorne.", "warning")
         return redirect(url_for('views.booking_step1', hotel_id=hotel_id))
     
     booking_data = session.get('booking_data')
-    num_guests = int(booking_data.get('num_guests', 1))
     checkin = booking_data.get('checkin')
     checkout = booking_data.get('checkout')
+    total_price = booking_data.get('total_price', 0)  # ← AUS SESSION
     num_guests_adult = booking_data.get('num_adults')
     num_guests_child = booking_data.get('num_children')
     num_guests = int(num_guests_adult) + int(num_guests_child)
+    
     if request.method == 'POST':
         print("POST Request in booking_step2")
         
         try:
-            # Neue Buchung in DB erstellen
             booking = Booking(
                 hotel_id=hotel_id,
                 user_id=current_user.id,
-                checkin_date=datetime.strptime(checkin, '%Y-%m-%d').date(),      # ← Hier umwandeln!
-                checkout_date=datetime.strptime(checkout, '%Y-%m-%d').date(),    # ← Hier umwandeln!
+                checkin_date=parse_date_flexible(checkin),
+                checkout_date=parse_date_flexible(checkout),
                 num_guests_adult=int(num_guests_adult),
                 num_guests_child=int(num_guests_child),
                 special_requests=request.form.get('special_requests', ''),
+                total_price=total_price,  # ← SPEICHERN!
                 status='pending'
             )
             db.session.add(booking)
-            db.session.flush()  # Booking-ID generieren
+            db.session.flush()
             print(f"✅ Booking erstellt mit ID: {booking.id}")
             
-            # Gäste in DB speichern
+            # Gäste speichern...
             for i in range(num_guests):
                 first_name = request.form.get(f'firstname_{i}')
                 last_name = request.form.get(f'lastname_{i}')
@@ -147,10 +174,7 @@ def booking_step2(hotel_id):
                 phone = request.form.get(f'phone_{i}')
                 birthdate_str = request.form.get(f'birthdate_{i}')
                 
-                print(f"👤 Gast {i+1}: {first_name} {last_name}")
-                
-                # Geburtsdatum konvertieren
-                birthdate = datetime.strptime(birthdate_str, '%Y-%m-%d').date() if birthdate_str else None
+                birthdate = parse_date_flexible(birthdate_str) if birthdate_str else None
                 
                 guest = Guest(
                     booking_id=booking.id,
@@ -162,23 +186,14 @@ def booking_step2(hotel_id):
                     guest_number=i + 1
                 )
                 db.session.add(guest)
-                print(f"   → Gast {i+1} hinzugefügt")
             
-            # Alles committen
             db.session.commit()
             print(f"💾 Alle Daten in DB gespeichert!")
             
-            # Booking-ID in Session speichern
             session['booking_id'] = booking.id
-            session['booking_data'].update({
-                'special_requests': request.form.get('special_requests', '')
-            })
-            
             flash(f'✅ Gästeinformationen für {num_guests} Gäste gespeichert!', 'success')
             
-            redirect_url = url_for('views.booking_review', hotel_id=hotel_id)
-            print(f"🔀 Redirect zu: {redirect_url}")
-            return redirect(redirect_url)
+            return redirect(url_for('views.booking_review', hotel_id=hotel_id))
             
         except Exception as e:
             db.session.rollback()
@@ -193,7 +208,8 @@ def booking_step2(hotel_id):
                          hotel_id=hotel_id,
                          num_guests=num_guests,
                          checkin=checkin,
-                         checkout=checkout)
+                         checkout=checkout,
+                         total_price=total_price)
 
 
 @views.route('/booking/<int:hotel_id>/review', methods=['GET', 'POST'])
@@ -201,59 +217,71 @@ def booking_step2(hotel_id):
 def booking_review(hotel_id):
     hotel = Hotel.query.get_or_404(hotel_id)
     
-    print(f"🔵 booking_review aufgerufen - Method: {request.method}")
-    
     if request.method == 'POST':
         booking_data = session.get('booking_data')
-        print(f"DEBUG: POST /booking/<id>/review, booking_data = {booking_data}")
         
         if not booking_data:
-            flash("Buchungsdaten fehlen. Bitte Schritt 1 erneut ausfüllen.", "warning")
+            flash("Buchungsdaten fehlen.", "warning")
             return redirect(url_for('views.booking_step1', hotel_id=hotel_id))
 
         try:
-            # Berechne Anzahl Nächte
-            checkin_date = datetime.strptime(booking_data['checkin'], '%Y-%m-%d').date()
-            checkout_date = datetime.strptime(booking_data['checkout'], '%Y-%m-%d').date()
+            checkin_date = parse_date_flexible(booking_data['checkin'])
+            checkout_date = parse_date_flexible(booking_data['checkout'])
             nights = (checkout_date - checkin_date).days
             
-            print(f"💰 Nächte: {nights}, Preis pro Nacht: {hotel.price_per_night}")
+            # ✅ WICHTIG: Preis vom Server neu berechnen!
+            room_type = booking_data.get('room_type', 'standard')
+            room_prices = {
+                'standard': hotel.price_per_night,
+                'deluxe': hotel.price_per_night_u1,
+                'family': hotel.price_per_night_u2,
+                'premium': hotel.price_per_night_u3
+            }
             
-            # ✅ RICHTIG - Verwende die korrekten Feldnamen!
+            price_per_person = room_prices.get(room_type, hotel.price_per_night)
+            num_adults = int(booking_data.get('num_adults', 1))
+            num_children = int(booking_data.get('num_children', 0))
+            
+            # Berechnung: Erwachsene voller Preis, Kinder 50%
+            total_price = nights * (
+                (price_per_person * num_adults) + 
+                (price_per_person * 0.5 * num_children)
+            )
+            
+            print(f"💰 Finale Berechnung: {nights} Nächte × {price_per_person}€ = {total_price}€")
+            
             booking = Booking(
                 user_id=current_user.id,
                 hotel_id=hotel_id,
-                checkin_date=checkin_date,           # ✅ RICHTIG!
-                checkout_date=checkout_date,        # ✅ RICHTIG!
-                num_guests=int(booking_data.get('num_guests', 1)),
+                checkin_date=checkin_date,
+                checkout_date=checkout_date,
+                num_guests_adult=num_adults,
+                num_guests_child=num_children,
                 special_requests=booking_data.get('special_requests', ''),
+                total_price=total_price,  # ← FINALE BERECHNUNG!
                 status='confirmed'
             )
             
             db.session.add(booking)
             db.session.commit()
             
-            print(f"✅ Buchung gespeichert mit ID: {booking.id}")
+            print(f"✅ Buchung gespeichert mit ID: {booking.id}, Preis: {total_price}€")
             
             session.pop('booking_data', None)
-            
             flash('Buchung erfolgreich abgeschlossen!', 'success')
             
-            redirect_url = url_for('views.booking_confirmation', booking_id=booking.id)
-            print(f"🔀 Redirect zu: {redirect_url}")
-            
-            return redirect(redirect_url)
+            return redirect(url_for('views.booking_confirmation', booking_id=booking.id))
             
         except Exception as e:
-            print(f"❌ FEHLER beim Speichern: {str(e)}")
+            print(f"❌ FEHLER: {str(e)}")
             flash(f'Fehler bei der Buchung: {str(e)}', 'error')
             return redirect(url_for('views.booking_step1', hotel_id=hotel_id))
 
-    print(f"📄 GET Request - Zeige booking_review.html")
     return render_template('booking_review.html',
                            user=current_user,
                            hotel=hotel,
                            booking_data=session.get('booking_data') or {})
+
 
 
 @views.route('/booking/<int:hotel_id>', methods=['GET','POST']) # Detailseite für ein Hotel
