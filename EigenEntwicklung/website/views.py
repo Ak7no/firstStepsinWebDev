@@ -225,11 +225,35 @@ def booking_review(hotel_id):
             return redirect(url_for('views.booking_step1', hotel_id=hotel_id))
 
         try:
+            # 📅 Daten aus Session
             checkin_date = parse_date_flexible(booking_data['checkin'])
             checkout_date = parse_date_flexible(booking_data['checkout'])
             nights = (checkout_date - checkin_date).days
             
-            # ✅ WICHTIG: Preis vom Server neu berechnen!
+            # 💳 KREDITKARTENDATEN AUS FORM
+            cardholder = request.form.get('cardholder', '').strip()
+            card_number = request.form.get('card_number', '').replace(' ', '')
+            expiry = request.form.get('expiry', '').strip()
+            cvv = request.form.get('cvv', '').strip()
+            
+            # ✅ VALIDIERUNG KREDITKARTE
+            if not cardholder or len(cardholder) < 3:
+                flash("❌ Ungültiger Karteninhaber!", "error")
+                return redirect(url_for('views.booking_review', hotel_id=hotel_id))
+            
+            if not card_number or len(card_number) < 13:
+                flash("❌ Ungültige Kartennummer!", "error")
+                return redirect(url_for('views.booking_review', hotel_id=hotel_id))
+            
+            if not expiry or len(expiry) != 5 or '/' not in expiry:
+                flash("❌ Ungültiges Verfallsdatum (Format: MM/YY)!", "error")
+                return redirect(url_for('views.booking_review', hotel_id=hotel_id))
+            
+            if not cvv or len(cvv) < 3:
+                flash("❌ Ungültiger CVV!", "error")
+                return redirect(url_for('views.booking_review', hotel_id=hotel_id))
+            
+            # 💰 Preisberechnung
             room_type = booking_data.get('room_type', 'standard')
             room_prices = {
                 'standard': hotel.price_per_night,
@@ -242,7 +266,6 @@ def booking_review(hotel_id):
             num_adults = int(booking_data.get('num_adults', 1))
             num_children = int(booking_data.get('num_children', 0))
             
-            # Berechnung: Erwachsene voller Preis, Kinder 50%
             total_price = nights * (
                 (price_per_person * num_adults) + 
                 (price_per_person * 0.5 * num_children)
@@ -250,6 +273,7 @@ def booking_review(hotel_id):
             
             print(f"💰 Finale Berechnung: {nights} Nächte × {price_per_person}€ = {total_price}€")
             
+            # 🔐 BOOKING MIT KREDITKARTENDATEN SPEICHERN
             booking = Booking(
                 user_id=current_user.id,
                 hotel_id=hotel_id,
@@ -258,29 +282,37 @@ def booking_review(hotel_id):
                 num_guests_adult=num_adults,
                 num_guests_child=num_children,
                 special_requests=booking_data.get('special_requests', ''),
-                total_price=total_price,  # ← FINALE BERECHNUNG!
-                status='confirmed'
+                total_price=total_price,
+                status='confirmed',
+                # 💳 KREDITKARTENDATEN SPEICHERN
+                creditcard_name=cardholder,
+                creditcard_number=card_number[-4:],  # ← NUR LETZTE 4 ZIFFERN!
+                creditcard_expiry=expiry,
+                creditcard_cvc=cvv
             )
             
             db.session.add(booking)
             db.session.commit()
             
-            print(f"✅ Buchung gespeichert mit ID: {booking.id}, Preis: {total_price}€")
+            print(f"✅ Buchung gespeichert mit ID: {booking.id}")
+            print(f"💳 Kreditkarte: {cardholder} - {card_number[-4:]}")
             
             session.pop('booking_data', None)
-            flash('Buchung erfolgreich abgeschlossen!', 'success')
+            flash('✅ Buchung erfolgreich abgeschlossen!', 'success')
             
             return redirect(url_for('views.booking_confirmation', booking_id=booking.id))
             
         except Exception as e:
+            db.session.rollback()
             print(f"❌ FEHLER: {str(e)}")
-            flash(f'Fehler bei der Buchung: {str(e)}', 'error')
-            return redirect(url_for('views.booking_step1', hotel_id=hotel_id))
+            flash(f'❌ Fehler bei der Buchung: {str(e)}', 'error')
+            return redirect(url_for('views.booking_review', hotel_id=hotel_id))
 
     return render_template('booking_review.html',
                            user=current_user,
                            hotel=hotel,
                            booking_data=session.get('booking_data') or {})
+
 
 
 

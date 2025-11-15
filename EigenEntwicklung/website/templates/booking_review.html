@@ -34,25 +34,158 @@
         background: rgba(0, 0, 0, 0.4);
     }
     
-    /* Content über dem Video */
     .content-wrapper {
         position: relative;
         z-index: 1;
         min-height: 100vh;
     }
     
-    /* Cards und Progress mit leichter Transparenz */
-    .card, .progress {
-        background: rgba(255, 255, 255, 0.95);
+    .main-container-box {
+        background: rgba(255, 255, 255, 0.92);
+        border-radius: 20px;
+        padding: 2.5rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(10px);
+        margin: 0 auto;
+        max-width: 1400px;
+    }
+    
+    .main-container-box h1 {
+        color: #333;
+        text-shadow: none;
+        margin-bottom: 2rem;
+        font-weight: 700;
+        border-bottom: 3px solid #007bff;
+        padding-bottom: 1rem;
+    }
+    
+    .card {
+        background: rgba(255, 255, 255, 0.98);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        margin-bottom: 1.5rem;
+    }
+    
+    .card-header {
+        background: rgba(0, 123, 255, 0.1);
+        border-bottom: 2px solid #23387E;
+        padding: 1rem;
+    }
+    
+    .card-header h4 {
+        margin: 0;
+        color: #333;
+    }
+    
+    .card-body {
+        padding: 1.5rem;
     }
     
     .progress {
-        background: rgba(255, 255, 255, 0.3);
+        background-color: rgba(200, 200, 200, 0.4);
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        height: 25px;
+        flex-grow: 1;
+        margin: 0;
+    }
+
+    .progress-bar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: white;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        transition: width 0.6s ease;
+        font-size: 14px;
+        height: 100%;  
     }
     
-    h2 {
+    .progress-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 2rem;
+    }
+
+    .progress-text {
+        color: #333;
+        font-weight: 500;
+        white-space: nowrap;
+        min-width: 120px;
+    }
+
+    .card-input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        font-size: 16px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        transition: all 0.3s ease;
+        background-color: #fafafa;
+    }
+
+    .form-input:focus {
+        outline: none;
+        border-color: #007bff;
+        background-color: #fff;
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+    }
+
+    .form-input::placeholder {
+        color: #999;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .btn-group {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
         color: white;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        color: white;
+        flex: 1;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
     }
 </style>
 
@@ -68,30 +201,123 @@
 <!-- Content über dem Video -->
 <div class="content-wrapper">
     <div class="container mt-4">
-        <div class="progress mb-4">
-            <div class="progress-bar" role="progressbar" style="width: 100%">Buchung überprüfen</div>
-        </div>
-        
-        <h2>Ihre Buchungsdetails</h2>
-        
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="card-title">{{ hotel.name }}</h5>
-                <p><strong>Check-in:</strong> {{ booking_data.checkin }}</p>
-                <p><strong>Check-out:</strong> {{ booking_data.checkout }}</p>
-                <p><strong>Gäste:</strong> {{ booking_data.num_guests }}</p>
-                <p><strong>Zimmertyp:</strong> {{ booking_data.room_type }}</p>
-                {% if booking_data.special_requests %}
-                <p><strong>Besondere Wünsche:</strong> {{ booking_data.special_requests }}</p>
-                {% endif %}
-                <p><strong>€/night:</strong> €{{ hotel.price_per_night }}</p>
+        <div class="main-container-box">
+            <h1>Buchung für {{ hotel.name }}</h1>
+
+            <!-- PROGRESS BAR -->
+            <div class="progress-wrapper">
+                <span class="progress-text">Schritt 3 von 3</span>
+                <div class="progress flex-grow-1"> 
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%"></div>  
+                </div>
             </div>
+
+            <!-- FORM START -->
+            <form method="POST" action="{{ url_for('views.booking_review', hotel_id=hotel.id) }}">
+                <div class="row">
+                    <!-- Linke Spalte: Buchungsübersicht + Zahlungsinformationen -->
+                    <div class="col-md-8">
+                        <!-- Buchungsübersicht -->
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h4>Buchungsübersicht</h4>
+                            </div>
+                            <div class="card-body">
+                                <p><strong>Hotel:</strong> {{ hotel.name }}</p>
+                                <p><strong>Adresse:</strong> {{ hotel.hotel_street}}</p>
+                                <p><strong>Check-in:</strong> {{ booking_data.checkin }}</p>
+                                <p><strong>Check-out:</strong> {{ booking_data.checkout }}</p>
+                                <p><strong>Gäste:</strong> 
+                                    {%if booking_data.num_adults| int ==1 %}
+                                    {{ booking_data.num_adults }} Erwachsener
+                                    {% elif booking_data.num_adults| int >1 %}
+                                    {{ booking_data.num_adults }} Erwachsene
+                                    {% endif %}
+                                    {% if booking_data.num_children| int <=1 %}
+                                    und {{booking_data.num_children}} Kind
+                                    {% elif booking_data.num_children| int >1 %}
+                                    und {{booking_data.num_children}} Kinder
+                                    {% endif %}</p>
+                                <p><strong>Zimmertyp:</strong> {{ booking_data.room_type }}</p>
+                                {% if booking_data.special_requests %}
+                                <p><strong>Besondere Wünsche:</strong> {{ booking_data.special_requests }}</p>
+                                {% endif %}
+                                {% if session.get('booking_data') %}
+                                <p><strong>Gesamtpreis:</strong> 
+                                    <span class="text" style="font-size: 1em;">
+                                        {{ "%.2f"|format(session['booking_data'].get('total_price', 0)) }}€
+                                    </span>
+                                </p>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Zahlungsinformationen -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Zahlungsinformationen</h4>
+                            </div>
+                            <div class="card-input-group">
+                                <!-- Karteninhaber -->
+                                <input 
+                                    type="text" 
+                                    name="cardholder" 
+                                    class="form-input"
+                                    placeholder="Karteninhaber" 
+                                    required>
+                                
+                                <!-- Kartennummer -->
+                                <input 
+                                    type="text" 
+                                    name="card_number" 
+                                    class="form-input"
+                                    placeholder="Kartennummer (z.B. 4242 4242 4242 4242)" 
+                                    maxlength="19"
+                                    required>
+                                
+                                <!-- Expiry und CVV nebeneinander -->
+                                <div class="form-row">
+                                    <input 
+                                        type="text" 
+                                        name="expiry" 
+                                        class="form-input"
+                                        placeholder="MM/YY" 
+                                        maxlength="5"
+                                        required>
+                                    
+                                    <input 
+                                        type="text" 
+                                        name="cvv" 
+                                        class="form-input"
+                                        placeholder="CVV (123)" 
+                                        maxlength="4"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rechte Spalte: Hinweis -->
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="mb-0">Wichtiger Hinweis zur Buchung</h6>
+                            </div>
+                            <div class="card-body">
+                                <p><strong>⚠️ Hinweis:</strong> Bitte überprüfen Sie ihre Buchungsdaten sorgfältig um Fehlbuchungen zu vermeiden. Mit dem Klick auf "Jetzt verbindlich Buchen" bestätigen Sie, dass ihre Buchungsdaten korrekt sind.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="btn-group">
+                    <a href="{{ url_for('views.booking_step1', hotel_id=hotel.id) }}" class="btn btn-secondary">« Zurück bearbeiten</a>
+                    <button type="submit" class="btn btn-success">Jetzt verbindlich buchen</button>
+                </div>
+            </form>
+            <!-- FORM END -->
         </div>
-        
-        <form method="POST" action="{{ url_for('views.booking_review', hotel_id=hotel.id) }}">
-            <button type="submit" class="btn btn-success">Jetzt verbindlich buchen</button>
-            <a href="{{ url_for('views.booking_step1', hotel_id=hotel.id) }}" class="btn btn-secondary">Zurück bearbeiten</a>
-        </form>
     </div>
 </div>
 {% endblock %}

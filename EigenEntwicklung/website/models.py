@@ -62,6 +62,10 @@ class Booking(db.Model):
     status = db.Column(db.String(20), default='pending')
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     total_price = db.Column(db.Integer)
+    creditcard_name = db.Column(db.String(100))
+    creditcard_number = db.Column(db.String(20))
+    creditcard_expiry = db.Column(db.String(7))  # Format MM/YYYY
+    creditcard_cvc = db.Column(db.String(4))
 
 class Guest(db.Model):
     id = db.Column(db.Integer, primary_key=True)

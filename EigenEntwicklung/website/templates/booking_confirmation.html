@@ -79,14 +79,16 @@
         <h1>✅ Buchungsbestätigung</h1>
         <p><strong>Reservierungsnummer:</strong> {{ booking.id }}</p>
         <p><strong>Hotel:</strong> {{ booking.hotel.name if booking.hotel else booking.hotel_id }}</p>
-        <p><strong>Check-in:</strong> {{ booking.checkin }}</p>
-        <p><strong>Check-out:</strong> {{ booking.checkout }}</p>
+        <p><strong>Check-in:</strong> {{ booking.checkin_date }}</p>
+        <p><strong>Check-out:</strong> {{ booking.checkout_date }}</p>
         <p><strong>Gesamtpreis:</strong> €{{ booking.total_price }}</p>
-        
+        <p><strong>Karteninhaber:</strong> {{ booking.creditcard_name }}</p>
+        <p><strong>Kartennummer:</strong> **** **** **** {{ booking.creditcard_number }}</p>
+        <p><strong>Verfallsdatum:</strong> {{ booking.creditcard_expiry }}</p>
         <hr class="my-4">
         
         <a href="/" class="btn btn-primary btn-lg">
-            <i class="fas fa-home"></i> Zur Startseite
+            Zur Startseite
         </a>
     </div>
 </div>
