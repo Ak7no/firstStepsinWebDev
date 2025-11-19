@@ -1,0 +1,53 @@
+body {
+
+    /* Content über dem Video */
+    .content-wrapper {
+        position: relative;
+        z-index: 1;
+        min-height: 100vh;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+
+    /* Hotel Cards */
+    .hotel-card {
+        transition: transform 0.2s;
+        border: none;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        background: rgba(255, 255, 255, 0.95);
+        /* Leicht transparent */
+        text-decoration: none;
+        display: block;
+    }
+
+    .hotel-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        background: rgba(255, 255, 255, 1);
+    }
+
+    .price-tag {
+        background: #28a745;
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-weight: 500;
+    }
+
+    /* Titel mit Hintergrund */
+    .page-title {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 1.5rem;
+        border-radius: 10px;
+        margin-bottom: 2rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .no-results-box {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 3rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+}

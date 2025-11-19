@@ -1,68 +1,8 @@
 {% extends "base.html" %}
 {% block title %}Buchungsbestätigung{% endblock %}
 {% block content %}
-<style>
-    /* Video Hintergrund */
-    .video-bg-container {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        z-index: -1;
-    }
-    
-    .video-bg-container video {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        min-width: 100%;
-        min-height: 100%;
-        width: auto;
-        height: auto;
-        transform: translate(-50%, -50%);
-        object-fit: cover;
-    }
-    
-    .video-bg-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.4);
-    }
-    
-    /* Content über dem Video */
-    .content-wrapper {
-        position: relative;
-        z-index: 1;
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .confirmation-box {
-        background: rgba(255, 255, 255, 0.95);
-        padding: 3rem;
-        border-radius: 15px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-        max-width: 600px;
-        text-align: center;
-    }
-    
-    h1 {
-        color: #28a745;
-        margin-bottom: 2rem;
-    }
-    
-    .confirmation-box p {
-        font-size: 1.1rem;
-        margin-bottom: 1rem;
-    }
-</style>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style_booking_confirmation.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style_video_playback.css') }}">
 
 <!-- Video Hintergrund -->
 <div class="video-bg-container">
@@ -86,7 +26,7 @@
         <p><strong>Kartennummer:</strong> **** **** **** {{ booking.creditcard_number }}</p>
         <p><strong>Verfallsdatum:</strong> {{ booking.creditcard_expiry }}</p>
         <hr class="my-4">
-        
+
         <a href="/" class="btn btn-primary btn-lg">
             Zur Startseite
         </a>

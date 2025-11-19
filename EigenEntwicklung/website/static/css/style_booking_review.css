@@ -1,0 +1,124 @@
+ body {
+     .content-wrapper {
+         position: relative;
+         z-index: 1;
+         min-height: 100vh;
+     }
+
+     /*Begin Card and Main Box*/
+     .main-container-box {
+         background: rgba(255, 255, 255, 0.92);
+         border-radius: 20px;
+         padding: 2.5rem;
+         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+         backdrop-filter: blur(10px);
+         margin: 0 auto;
+         max-width: 1400px;
+     }
+
+     .main-container-box h1 {
+         color: #333;
+         text-shadow: none;
+         margin-bottom: 2rem;
+         font-weight: 700;
+         border-bottom: 3px solid #007bff;
+         padding-bottom: 1rem;
+     }
+
+     .card {
+         background: rgba(255, 255, 255, 0.98);
+         border: 1px solid rgba(0, 0, 0, 0.1);
+         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+         margin-bottom: 1.5rem;
+     }
+
+     .card-header {
+         background: rgba(0, 123, 255, 0.1);
+         border-bottom: 2px solid #23387E;
+         padding: 1rem;
+     }
+
+     .card-header h4 {
+         margin: 0;
+         color: #333;
+     }
+
+     .card-body {
+         padding: 1.5rem;
+     }
+
+     /*Ende Card and Main Box*/
+
+     /* Gästeinformationsabschnitt */
+     .card-input-group {
+         display: flex;
+         flex-direction: column;
+         gap: 1rem;
+         padding: 1.5rem;
+     }
+
+     .form-input {
+         width: 100%;
+         padding: 12px 15px;
+         border: 1px solid #e0e0e0;
+         border-radius: 6px;
+         font-size: 16px;
+         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+         transition: all 0.3s ease;
+         background-color: #fafafa;
+     }
+
+     .form-input:focus {
+         outline: none;
+         border-color: #007bff;
+         background-color: #fff;
+         box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+     }
+
+     .form-input::placeholder {
+         color: #999;
+     }
+
+     .form-row {
+         display: grid;
+         grid-template-columns: 1fr 1fr;
+         gap: 1rem;
+     }
+
+     .btn-group {
+         display: flex;
+         gap: 1rem;
+         margin-top: 2rem;
+     }
+
+     .btn {
+         padding: 12px 24px;
+         border: none;
+         border-radius: 6px;
+         font-size: 16px;
+         font-weight: 500;
+         cursor: pointer;
+         transition: all 0.3s ease;
+     }
+
+     .btn-secondary {
+         background-color: #6c757d;
+         color: white;
+         text-decoration: none;
+         display: inline-block;
+     }
+
+     .btn-secondary:hover {
+         background-color: #5a6268;
+     }
+
+     .btn-success {
+         background-color: #28a745;
+         color: white;
+         flex: 1;
+     }
+
+     .btn-success:hover {
+         background-color: #218838;
+     }
+ }

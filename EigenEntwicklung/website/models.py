@@ -39,8 +39,6 @@ class Hotel(db.Model):
     hotel_website = db.Column(db.String(200))
     hotel_street = db.Column(db.String(200))
 
-    
-
 class Reservation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, nullable=False)

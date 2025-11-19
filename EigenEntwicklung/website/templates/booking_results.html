@@ -1,89 +1,8 @@
 {% extends "base.html" %}
 {% block title %}Suchergebnisse{% endblock %}
 {% block content %}
-<style>
-    /* Video Hintergrund */
-    .video-bg-container {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        z-index: -1;
-    }
-    
-    .video-bg-container video {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        min-width: 100%;
-        min-height: 100%;
-        width: auto;
-        height: auto;
-        transform: translate(-50%, -50%);
-        object-fit: cover;
-    }
-    
-    .video-bg-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5); /* Dunkles Overlay für bessere Lesbarkeit */
-    }
-    
-    /* Content über dem Video */
-    .content-wrapper {
-        position: relative;
-        z-index: 1;
-        min-height: 100vh;
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-    }
-    
-    /* Hotel Cards */
-    .hotel-card {
-        transition: transform 0.2s;
-        border: none;
-        margin-bottom: 1rem;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        background: rgba(255, 255, 255, 0.95); /* Leicht transparent */
-        text-decoration: none;
-        display: block;
-    }
-    
-    .hotel-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-        background: rgba(255, 255, 255, 1);
-    }
-    
-    .price-tag {
-        background: #28a745;
-        color: white;
-        padding: 0.25rem 0.75rem;
-        border-radius: 20px;
-        font-weight: 500;
-    }
-    
-    /* Titel mit Hintergrund */
-    .page-title {
-        background: rgba(255, 255, 255, 0.9);
-        padding: 1.5rem;
-        border-radius: 10px;
-        margin-bottom: 2rem;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    
-    .no-results-box {
-        background: rgba(255, 255, 255, 0.95);
-        padding: 3rem;
-        border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-</style>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style_booking_results.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style_video_playback.css') }}">
 
 <!-- Video Hintergrund -->
 <div class="video-bg-container">
@@ -100,42 +19,42 @@
         <div class="page-title text-center">
             <h1 class="mb-2">🏨 Hotels in "{{ city }}"</h1>
             {% if hotels %}
-                <p class="text-muted mb-0">{{ hotels|length }} Hotels gefunden</p>
+            <p class="text-muted mb-0">{{ hotels|length }} Hotels gefunden</p>
             {% endif %}
         </div>
-        
+
         {% if hotels %}
-            <div class="row">
-                {% for hotel in hotels %}
-                <div class="col-md-6 col-lg-4">
-                    <a href="{{ url_for('views.booking_detail', hotel_id=hotel.id) }}" class="hotel-card rounded p-3">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <h5 class="mb-0 text-dark">{{ hotel.name }}</h5>
-                            <!--span class="badge bg-primary">{{ hotel.city }}</span-->
-                        </div>
-                        
-                        <p class="text-muted mb-3"> 
-                            {{ hotel.description }}
-                        </p>
-                        
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="price-tag">€{{ hotel.price_per_night }}/Nacht</span>
-                            <small class="text-primary fw-bold">Jetzt Reservieren →</small>
-                        </div>
-                    </a>
-                </div>
-                {% endfor %}
+        <div class="row">
+            {% for hotel in hotels %}
+            <div class="col-md-6 col-lg-4">
+                <a href="{{ url_for('views.booking_detail', hotel_id=hotel.id) }}" class="hotel-card rounded p-3">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="mb-0 text-dark">{{ hotel.name }}</h5>
+                        <!--span class="badge bg-primary">{{ hotel.city }}</span-->
+                    </div>
+
+                    <p class="text-muted mb-3">
+                        {{ hotel.description }}
+                    </p>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="price-tag">€{{ hotel.price_per_night }}/Nacht</span>
+                        <small class="text-primary fw-bold">Jetzt Reservieren →</small>
+                    </div>
+                </a>
             </div>
+            {% endfor %}
+        </div>
         {% else %}
-            <div class="text-center">
-                <div class="no-results-box">
-                    <h3 class="text-muted">Keine Hotels in {{ city }} gefunden</h3>
-                    <p class="text-muted">Versuchen Sie eine andere Stadt</p>
-                    <a href="{{ url_for('views.booking_search') }}" class="btn btn-primary mt-3">
-                        <i class="fas fa-search"></i> Neue Suche
-                    </a>
-                </div>
+        <div class="text-center">
+            <div class="no-results-box">
+                <h3 class="text-muted">Keine Hotels in {{ city }} gefunden</h3>
+                <p class="text-muted">Versuchen Sie eine andere Stadt</p>
+                <a href="{{ url_for('views.booking_search') }}" class="btn btn-primary mt-3">
+                    <i class="fas fa-search"></i> Neue Suche
+                </a>
             </div>
+        </div>
         {% endif %}
     </div>
 </div>

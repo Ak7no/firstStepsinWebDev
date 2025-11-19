@@ -1,0 +1,77 @@
+body {
+
+    /* Suchbox zentriert über dem Video */
+    .search-section {
+        position: relative;
+        z-index: 2;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+        /* Damit nur die Suchbox klickbar ist */
+    }
+
+    .search-box {
+        background: rgba(255, 255, 255, 0.97);
+        border-radius: 15px;
+        padding: 2.5rem;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        max-width: 500px;
+        width: 90%;
+        pointer-events: auto;
+        /* Suchbox ist klickbar */
+        text-align: center;
+    }
+
+    .search-box h1 {
+        color: #333;
+        margin-bottom: 1.5rem;
+        font-weight: 700;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #4a5568;
+        margin-bottom: 0.5rem;
+        display: block;
+        text-align: left;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        padding: 0.75rem;
+        border: 2px solid #e0e0e0;
+        width: 100%;
+    }
+
+    .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        outline: none;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 8px;
+        padding: 0.75rem;
+        font-weight: 600;
+        width: 100%;
+        color: #fff;
+        margin-top: 1rem;
+        transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    @media (max-width: 576px) {
+        .search-box {
+            padding: 1.2rem;
+        }
+    }
+}

@@ -1,273 +1,101 @@
 {% extends "base.html" %}
 {% block title %}Buchung - Gästeinformationen{% endblock %}
 {% block content %}
-<style>
-    /* Video Hintergrund */
-    .video-bg-container {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        z-index: -1;
-    }
-    
-    .video-bg-container video {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        min-width: 100%;
-        min-height: 100%;
-        width: auto;
-        height: auto;
-        transform: translate(-50%, -50%);
-        object-fit: cover;
-    }
-    
-    .video-bg-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.4);
-    }
-    
-    /* Content über dem Video */
-    .content-wrapper {
-        position: relative;
-        z-index: 1;
-        min-height: 100vh;
-        padding: 2rem 0;
-    }
-    
-    /* GROSSE SEMI-TRANSPARENTE BOX */
-    .main-container-box {
-        background: rgba(255, 255, 255, 0.92);
-        border-radius: 20px;
-        padding: 2.5rem;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-        backdrop-filter: blur(10px);
-        margin: 0 auto;
-        max-width: 1400px;
-    }
-    
-    /* Titel innerhalb der Box */
-    .main-container-box h1 {
-        color: #333;
-        text-shadow: none;
-        margin-bottom: 2rem;
-        font-weight: 700;
-        border-bottom: 3px solid #007bff;
-        padding-bottom: 1rem;
-    }
-    
-    /* Cards innerhalb der Box */
-    .card {
-        background: rgba(255, 255, 255, 0.98);
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        margin-bottom: 1.5rem;
-    }
-    
-    .card-header {
-        background: rgba(0, 123, 255, 0.1);
-        border-bottom: 2px solid #23387E;
-    }
-    
-    .alert {
-        background: rgba(255, 255, 255, 0.95);
-        border-left: 4px solid #17a2b8;
-    }
-    
-    /* Fortschrittsleiste */
-    .progress {
-        background-color: rgba(200, 200, 200, 0.4);
-        border-radius: 10px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        height: 25px;
-        flex-grow: 1;
-        margin: 0;
-    }
 
-    .progress-bar {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        color: white;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-        transition: width 0.6s ease;
-        font-size: 14px;
-        height: 100%;  
-    }
-    .progress-wrapper {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        margin-bottom: 2rem;
-    }
-
-    .progress-text {
-        color: #333;
-        font-weight: 500;
-        white-space: nowrap;
-        min-width: 120px;
-    }
-    
-    .guest-section {
-        background: #f8f9fa;
-        padding: 15px;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        border-left: 4px solid #003580;
-    }
-    .guest-section h6 {
-        color: #003580;
-        margin-bottom: 15px;
-        font-weight: 600;
-    }
-    .btn-hotel-website {
-    display: inline-block;
-    padding: 6px 15px;
-    background: linear-gradient(135deg, #007bff, #0056b3);
-    color: white;
-    text-decoration: none;
-    border-radius: 25px;
-    font-weight: 600;
-    font-size: 0.85rem;
-    transition: all 0.3s ease;
-   /* box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3); */
-    border: none;
-    cursor: pointer;
-}
-
-.btn-hotel-website:hover {
-    background: linear-gradient(135deg, #0056b3, #003d82);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.5);
-    color: white;
-}
-
-.btn-hotel-website:active {
-    transform: translateY(0);
-}
-</style>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style_booking_step2.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style_video_playback.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style_progress_bar.css') }}">
 
 <!-- Video Hintergrund -->
 <div class="video-bg-container">
-    <video autoplay muted loop playsinline>
-        <source src="{{ url_for('static', filename='primVid.mp4') }}" type="video/mp4">
-    </video>
-    <div class="video-bg-overlay"></div>
+  <video autoplay muted loop playsinline>
+    <source src="{{ url_for('static', filename='primVid.mp4') }}" type="video/mp4">
+  </video>
+  <div class="video-bg-overlay"></div>
 </div>
 
 <!-- Content über dem Video -->
 <div class="content-wrapper">
-    <div class="container mt-4">
+  <div class="container mt-4">
 
-      <div class="main-container-box">
-        <h1>Buchung für {{ hotel.name }}</h1>
+    <div class="main-container-box">
+      <h1>Buchung für {{ hotel.name }}</h1>
 
-        <!-- ✅ PROGRESS BAR - IDENTISCH WIE IN STEP 1 -->
-        <div class="progress-wrapper">
-          <span class="progress-text">Schritt 2 von 3</span>
-          <div class="progress flex-grow-1"> 
-            <div class="progress-bar bg-success" role="progressbar" style="width: 66.66%"></div>  
-          </div>
+      <!-- ✅ PROGRESS BAR - IDENTISCH WIE IN STEP 1 -->
+      <div class="progress-wrapper">
+        <span class="progress-text">Schritt 2 von 3</span>
+        <div class="progress flex-grow-1">
+          <div class="progress-bar bg-success" role="progressbar" style="width: 66.66%"></div>
         </div>
+      </div>
 
-       <div class="row">
-          <!--Hauptformular -->
-          <div class="col-md-8">
-            <!-- Buchungsformular -->
-            <div class="card">
-              <div class="card-header">
-                <h5 class="mb-0"><strong>Schritt 2: Gästeinformationen und Sonderwünsche</strong></h5>
-              </div>
+      <div class="row">
+        <!--Hauptformular -->
+        <div class="col-md-8">
+          <!-- Buchungsformular -->
+          <div class="card">
+            <div class="card-header">
+              <h5 class="mb-0"><strong>Schritt 2: Gästeinformationen und Sonderwünsche</strong></h5>
+            </div>
             <div class="card-body">
               <form method="POST" action="{{ url_for('views.booking_step2', hotel_id=hotel.id) }}">
-                
+
                 {% for i in range(num_guests) %}
                 <div class="guest-section">
                   <h6>Gast {{ i + 1 }}</h6>
-                  
+
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="firstname_{{ i }}">Vorname</label>
-                        <input type="text" 
-                               id="firstname_{{ i }}" 
-                               name="firstname_{{ i }}" 
-                               class="form-control" 
-                               required
-                               placeholder="z.B. Max">
+                        <input type="text" id="firstname_{{ i }}" name="firstname_{{ i }}" class="form-control" required
+                          placeholder="z.B. Max">
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="lastname_{{ i }}">Nachname</label>
-                        <input type="text" 
-                               id="lastname_{{ i }}" 
-                               name="lastname_{{ i }}" 
-                               class="form-control" 
-                               required
-                               placeholder="z.B. Mustermann">
+                        <input type="text" id="lastname_{{ i }}" name="lastname_{{ i }}" class="form-control" required
+                          placeholder="z.B. Mustermann">
                       </div>
                     </div>
                   </div>
-                  
+
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="email_{{ i }}">E-Mail</label>
-                        <input type="email" 
-                               id="email_{{ i }}" 
-                               name="email_{{ i }}" 
-                               class="form-control" 
-                               required
-                               placeholder="max@example.com">
+                        <input type="email" id="email_{{ i }}" name="email_{{ i }}" class="form-control" required
+                          placeholder="max@example.com">
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="phone_{{ i }}">Telefon</label>
-                        <input type="tel" 
-                               id="phone_{{ i }}" 
-                               name="phone_{{ i }}" 
-                               class="form-control" 
-                               required
-                               placeholder="+49 123 456789">
+                        <input type="tel" id="phone_{{ i }}" name="phone_{{ i }}" class="form-control" required
+                          placeholder="+49 123 456789">
                       </div>
                     </div>
                   </div>
-                  
+
                   <div class="form-group">
                     <label for="birthdate_{{ i }}">Geburtsdatum</label>
-                    <input type="date" 
-                           id="birthdate_{{ i }}" 
-                           name="birthdate_{{ i }}" 
-                           class="form-control" 
-                           required>
+                    <input type="date" id="birthdate_{{ i }}" name="birthdate_{{ i }}" class="form-control" required>
                     <small class="text-muted">Format: TT.MM.YYYY</small>
                   </div>
                 </div>
                 {% endfor %}
-                
+
                 <hr>
-                
+
                 <div class="form-group">
                   <label for="special_requests">Spezielle Wünsche (optional)</label>
-                  <textarea id="special_requests" 
-                            name="special_requests" 
-                            class="form-control" 
-                            rows="4"
-                            placeholder="z.B. Zimmer mit Seeblick, Hochbett, etc."></textarea>
+                  <textarea id="special_requests" name="special_requests" class="form-control" rows="4"
+                    placeholder="z.B. Zimmer mit Seeblick, Hochbett, etc."></textarea>
                 </div>
-                
+
                 <hr>
-                
+
                 <div class="d-flex justify-content-between">
                   <a href="{{ url_for('views.booking_step1', hotel_id=hotel.id) }}" class="btn btn-secondary">
                     « Zurück zu Schritt 1
@@ -280,8 +108,8 @@
             </div>
           </div>
         </div>
-        
-              <div class="col-md-4">
+
+        <div class="col-md-4">
           <div class="card">
             <div class="card-header">
               <h6 class="mb-0">Buchungsübersicht</h6>
@@ -293,41 +121,42 @@
               <p><strong>Abreise:</strong> {{ checkout }}</p>
               <p><strong>Gäste:</strong> {{ num_guests }}</p>
               <hr>
-              
+
               <!-- ✅ PREIS AUS SESSION -->
               {% if session.get('booking_data') %}
-                <p><strong>Gesamtpreis:</strong> 
-                  <span class="text" style="font-size: 1.1em; font-weight: bold;">
-                    {{ "%.2f"|format(session['booking_data'].get('total_price', 0)) }}€
-                  </span>
-                </p>
+              <p><strong>Gesamtpreis:</strong>
+                <span class="text" style="font-size: 1.1em; font-weight: bold;">
+                  {{ "%.2f"|format(session['booking_data'].get('total_price', 0)) }}€
+                </span>
+              </p>
               {% else %}
-                <p class="text-muted">Preis wird berechnet...</p>
+              <p class="text-muted">Preis wird berechnet...</p>
               {% endif %}
-              
-              
+
+
             </div>
-            
+
           </div>
           <div class="card mt-3">
-                            <div class="card-header">
-                                <h6 class="mb-0">Sie haben Fragen?</h6>
-                            </div>
-                            <div class="card-body">
-                              <p> Bei bestehenden Fragen zu unseren Angebotenen Services, zögen Sie nicht und kontaktieren Sie unser Support-Team!</p>
-                              <p>✉️: {{hotel.hotel_email}}</p>
-                              <p>☎️: {{hotel.hotel_phone}}</p>
-                              <p>Hier finden Sie unsere Webseite:
-                             </p>
-                              <a href={{hotel.hotel_website}} class="btn-hotel-website">
-                                   {{hotel.name}} Webseite
-                              </a> 
-                          </div>
-                    </div>
+            <div class="card-header">
+              <h6 class="mb-0">Sie haben Fragen?</h6>
+            </div>
+            <div class="card-body">
+              <p> Bei bestehenden Fragen zu unseren Angebotenen Services, zögen Sie nicht und kontaktieren Sie unser
+                Support-Team!</p>
+              <p>✉️: {{hotel.hotel_email}}</p>
+              <p>☎️: {{hotel.hotel_phone}}</p>
+              <p>Hier finden Sie unsere Webseite:
+              </p>
+              <a href={{hotel.hotel_website}} class="btn-hotel-website">
+                {{hotel.name}} Webseite
+              </a>
+            </div>
+          </div>
         </div>
 
       </div>
-      </div>
     </div>
+  </div>
 </div>
 {% endblock %}

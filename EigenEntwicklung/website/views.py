@@ -128,8 +128,8 @@ def parse_date_flexible(date_string):
     raise ValueError(f"Datum '{date_string}' konnte nicht geparst werden")
 
 
-@views.route('/booking/<int:hotel_id>/step2', methods=['GET', 'POST'])
-@login_required
+@views.route('/booking/<int:hotel_id>/step2', methods=['GET', 'POST']) # Zweiter Schritt der Buchung
+@login_required 
 def booking_step2(hotel_id):
     print(f"booking_step2 aufgerufen - Method: {request.method}")
     hotel = Hotel.query.get_or_404(hotel_id)
@@ -142,12 +142,12 @@ def booking_step2(hotel_id):
     booking_data = session.get('booking_data')
     checkin = booking_data.get('checkin')
     checkout = booking_data.get('checkout')
-    total_price = booking_data.get('total_price', 0)  # ← AUS SESSION
+    total_price = booking_data.get('total_price', 0) 
     num_guests_adult = booking_data.get('num_adults')
     num_guests_child = booking_data.get('num_children')
     num_guests = int(num_guests_adult) + int(num_guests_child)
     
-    if request.method == 'POST':
+    if request.method == 'POST':    
         print("POST Request in booking_step2")
         
         try:
@@ -159,7 +159,7 @@ def booking_step2(hotel_id):
                 num_guests_adult=int(num_guests_adult),
                 num_guests_child=int(num_guests_child),
                 special_requests=request.form.get('special_requests', ''),
-                total_price=total_price,  # ← SPEICHERN!
+                total_price=total_price,  
                 status='pending'
             )
             db.session.add(booking)
@@ -249,7 +249,7 @@ def booking_review(hotel_id):
                 flash("❌ Ungültiges Verfallsdatum (Format: MM/YY)!", "error")
                 return redirect(url_for('views.booking_review', hotel_id=hotel_id))
             
-            if not cvv or len(cvv) < 3:
+            if not cvv or len(cvv) != 3:
                 flash("❌ Ungültiger CVV!", "error")
                 return redirect(url_for('views.booking_review', hotel_id=hotel_id))
             
@@ -273,7 +273,7 @@ def booking_review(hotel_id):
             
             print(f"💰 Finale Berechnung: {nights} Nächte × {price_per_person}€ = {total_price}€")
             
-            # 🔐 BOOKING MIT KREDITKARTENDATEN SPEICHERN
+            # 📦 BUCHUNG SPEICHERN
             booking = Booking(
                 user_id=current_user.id,
                 hotel_id=hotel_id,
@@ -281,15 +281,13 @@ def booking_review(hotel_id):
                 checkout_date=checkout_date,
                 num_guests_adult=num_adults,
                 num_guests_child=num_children,
-                special_requests=booking_data.get('special_requests', ''),
                 total_price=total_price,
                 status='confirmed',
-                # 💳 KREDITKARTENDATEN SPEICHERN
                 creditcard_name=cardholder,
-                creditcard_number=card_number[-4:],  # ← NUR LETZTE 4 ZIFFERN!
+                creditcard_number=card_number[-4:],  
                 creditcard_expiry=expiry,
-                creditcard_cvc=cvv
-            )
+                creditcard_cvc=cvv,
+                )
             
             db.session.add(booking)
             db.session.commit()
