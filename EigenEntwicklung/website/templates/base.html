@@ -30,7 +30,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbar">
         <div class="navbar-nav">
-          <a class="nav-item nav-link" href="/">Home</a>
+          <a class="nav-item nav-link" href="/">Hotel Suche</a>
           {% if user.is_authenticated %}
           <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
           {% else %}
@@ -88,5 +88,8 @@
   }
 </script>
 {% endblock %}
+<script>
+(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="sDuMOKM56PLeQ-1kA4OuX";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+</script>
   </body>
 </html>

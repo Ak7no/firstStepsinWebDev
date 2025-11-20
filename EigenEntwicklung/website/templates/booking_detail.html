@@ -5,18 +5,17 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style_booking_detail.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style_video_playback.css') }}">
 
-<!-- Video Hintergrund -->
+<!--Video Hintergrund-->
 <div class="video-bg-container">
   <video autoplay muted loop playsinline>
     <source src="{{ url_for('static', filename='primVid.mp4') }}" type="video/mp4">
   </video>
   <div class="video-bg-overlay"></div>
 </div>
-
-<!-- Content über dem Video -->
 <div class="content-wrapper">
   <div class="container">
-    <!-- GROSSE SEMI-TRANSPARENTE BOX -->
+
+   <!--Main Part-->>
     <div class="main-container-box">
       <h1>{{ hotel.name }}</h1>
 
@@ -175,9 +174,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 
-    <!-- ===== ALLE SCRIPTS AM ENDE ===== -->
+
     <script>
-      // ========== CAROUSEL SCRIPT ==========
+      // Carousel Script
       let currentSlide = 0;
       const slides = document.querySelectorAll('.carousel-image');
       const totalSlides = slides.length;
@@ -204,30 +203,24 @@
         changeSlide(1);
       }, 4000);
 
-
-      /// ========== LEAFLET MAPS SCRIPT ==========
+      //Open Street Map Script  
       function initMap() {
-        const HOTEL_LATITUDE = {{ hotel.latitude }
-      };
+      const HOTEL_LATITUDE = {{ hotel.latitude }};
       const HOTEL_LONGTITUDE = {{ hotel.longtitude }};
       const hotelLocation = [HOTEL_LATITUDE, HOTEL_LONGTITUDE];
-      // Karte erstellen
       const map = L.map('map').setView(hotelLocation, 15);
 
-      // OpenStreetMap Layer
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors',
         maxZoom: 19
       }).addTo(map);
 
-      // Marker setzen
       L.marker(hotelLocation)
         .addTo(map)
         .bindPopup("<b>{{ hotel.name }}</b><br>{{ hotel.address }}")
         .openPopup();
-}
+    }
 
-      // Karte laden, wenn Seite fertig ist
       window.addEventListener('load', initMap);
     </script>
 

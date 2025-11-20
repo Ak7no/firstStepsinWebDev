@@ -1,26 +1,15 @@
 from . import db #. uses the current package
 from flask_login import UserMixin #Special class that helps to create a user table / model 
 from sqlalchemy.sql import func #func gets the current timestamp
-
-class Note(db.Model): #Here will be the structure of our note table (columns)
-    id = db.Column(db.Integer, primary_key=True) #Primary key is a unique identifier for each record
-    data = db.Column(db.String(10000)) #String with max length of 10000 characters
-    date = db.Column(db.DateTime(timezone=True), default=func.now()) #DateTime column with timezone, default value is the current timestamp
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id')) #Foreign key to link the note to a specific user; Reference to table User and its column id
-
-
-class User(db.Model, UserMixin): #Here will be the structure of our user table (columns); UserMixin is from Flask-Login module
-    id = db.Column(db.Integer, primary_key=True) #Primary key is a unique identifier for each record
-    email = db.Column(db.String(150), unique=True) #String with max length of 150 characters, must be unique
-    password = db.Column(db.String(150)) #String with max length of 150 characters
-    first_name = db.Column(db.String(150)) #String with max length of 150 characters
-    notes = db.relationship('Note') #Relationship to link User to their Notes; One-to-many relationship (one user can have many notes), thanks Kirchberg!
-   
 from datetime import date, datetime
 from flask_sqlalchemy import SQLAlchemy
 
-#db = SQLAlchemy() 
-
+class User(db.Model, UserMixin): 
+    id = db.Column(db.Integer, primary_key=True) 
+    email = db.Column(db.String(150), unique=True) 
+    password = db.Column(db.String(150)) 
+    first_name = db.Column(db.String(150)) 
+   
 class Hotel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(150), nullable=False)
@@ -39,21 +28,12 @@ class Hotel(db.Model):
     hotel_website = db.Column(db.String(200))
     hotel_street = db.Column(db.String(200))
 
-class Reservation(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, nullable=False)
-    hotel_id = db.Column(db.Integer, db.ForeignKey('hotel.id'), nullable=False)
-    checkin = db.Column(db.Date, nullable=False)
-    checkout = db.Column(db.Date, nullable=False)
-    total_price = db.Column(db.Integer)
-    created_at = db.Column(db.Date, default=date.today)
-
 class Booking(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     hotel_id = db.Column(db.Integer, db.ForeignKey('hotel.id'), nullable=False)
-    checkin_date = db.Column(db.Date, nullable=False)      # ← WICHTIG
-    checkout_date = db.Column(db.Date, nullable=False)     # ← WICHTIG
+    checkin_date = db.Column(db.Date, nullable=False)    
+    checkout_date = db.Column(db.Date, nullable=False)  
     num_guests_adult = db.Column(db.Integer, nullable=False)
     num_guests_child = db.Column(db.Integer)
     special_requests = db.Column(db.Text)
@@ -62,7 +42,7 @@ class Booking(db.Model):
     total_price = db.Column(db.Integer)
     creditcard_name = db.Column(db.String(100))
     creditcard_number = db.Column(db.String(20))
-    creditcard_expiry = db.Column(db.String(7))  # Format MM/YYYY
+    creditcard_expiry = db.Column(db.String(7)) 
     creditcard_cvc = db.Column(db.String(4))
 
 class Guest(db.Model):

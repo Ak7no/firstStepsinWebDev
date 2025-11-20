@@ -2,41 +2,10 @@ from datetime import date, datetime
 import json 
 from flask import Blueprint, jsonify, render_template, request, flash, redirect, url_for, session
 from flask_login import login_required, current_user
-from .models import Guest, Hotel, Booking, Note, Reservation
+from .models import Guest, Hotel, Booking
 from . import db
 
 views = Blueprint('views', __name__)
-
-
-#@views.route('/', methods=['GET', 'POST'])
-#@login_required
-#def home():
-#    if request.method == 'POST': 
-#        note = request.form.get('note')#Gets the note from the HTML 
-#
-#        if len(note) < 1:
-#            flash('Note is too short!', category='error') 
-#        else:
-#            new_note = Note(data=note, user_id=current_user.id)  #providing the schema for the note 
-#            db.session.add(new_note) #adding the note to the database 
-#            db.session.commit()
-#            flash('Note added!', category='success')
-#
-#    return render_template("home.html", user=current_user)
-
-
-#@views.route('/delete-note', methods=['POST'])
-#def delete_note():  
-#    note = json.loads(request.data) # this function expects a JSON from the INDEX.js file 
-#    noteId = note['noteId']
-#    note = Note.query.get(noteId)
-#    if note:
-#        if note.user_id == current_user.id:
-#            db.session.delete(note)
-#            db.session.commit()
-#
-#    return jsonify({})
-
 
 @views.route('/', methods=['GET', 'POST'])
 @login_required
@@ -45,15 +14,8 @@ def booking_search():
         city = request.form.get('city')
         checkin = request.form.get('checkin')
         checkout = request.form.get('checkout')
-        
-        # Debug print
-        print(f"Searching for: City={city}, Check-in={checkin}, Check-out={checkout}")
-        
+
         hotels = Hotel.query.filter(Hotel.city.ilike(f'%{city}%')).all()
-        
-        # Debug print
-        print(f"Found {len(hotels)} hotels")
-        
         return render_template("booking_results.html", 
                              user=current_user,
                              hotels=hotels,
@@ -67,16 +29,15 @@ def booking_step1(hotel_id):
     hotel = Hotel.query.get_or_404(hotel_id)
     
     if request.method == 'POST':
-        print("🔵 POST Request empfangen in booking_step1")
+        print("POST Request empfangen in booking_step1")
         
         checkin_date = request.form.get('checkin')
         checkout_date = request.form.get('checkout')
-        total_price = request.form.get('total_price')  # ← Vom Frontend
+        total_price = request.form.get('total_price')  
         num_children = request.form.get('num_children', 0)
         num_adults = request.form.get('num_adults', 1)
-        room_type = request.form.get('room_type')  # ← WICHTIG!
+        room_type = request.form.get('room_type') 
         
-        # ✅ VALIDIERUNG
         try:
             total_price = float(total_price)
             if total_price <= 0:
@@ -88,7 +49,6 @@ def booking_step1(hotel_id):
         
         num_guests = int(num_children) + int(num_adults)
         
-        # ✅ SESSION speichern
         session['booking_data'] = {
             'hotel_id': hotel_id,
             'checkin': checkin_date,
@@ -96,10 +56,10 @@ def booking_step1(hotel_id):
             'num_children': num_children,
             'num_adults': num_adults,
             'room_type': room_type,
-            'total_price': total_price  # ← GESPEICHERT!
+            'total_price': total_price 
         }
-        
-        print(f"💾 Session gespeichert: {session['booking_data']}")
+        #Print Session Data für Debugging und Validierung 
+        print(f"Session gespeichert: {session['booking_data']}")
         return redirect(url_for('views.booking_step2', hotel_id=hotel_id))
     
     return render_template('booking_step1.html', user=current_user, hotel=hotel)
@@ -108,10 +68,9 @@ def booking_step1(hotel_id):
 from datetime import datetime
 
 def parse_date_flexible(date_string):
-    """Versucht, das Datum in verschiedenen Formaten zu parsen"""
     if not date_string:
         return None
-    
+ #Dient um verschiedene Datumsformate zu erkennen und keine Fehler zu werfen bei der Speicherung   
     formats = [
         '%Y-%m-%d',      # ISO: 2025-11-01
         '%d.%m.%Y',      # Deutsch: 01.11.2025
@@ -131,11 +90,9 @@ def parse_date_flexible(date_string):
 @views.route('/booking/<int:hotel_id>/step2', methods=['GET', 'POST']) # Zweiter Schritt der Buchung
 @login_required 
 def booking_step2(hotel_id):
-    print(f"booking_step2 aufgerufen - Method: {request.method}")
     hotel = Hotel.query.get_or_404(hotel_id)
     
     if 'booking_data' not in session:
-        print("Keine booking_data in Session gefunden!")
         flash("Bitte starte die Buchung von vorne.", "warning")
         return redirect(url_for('views.booking_step1', hotel_id=hotel_id))
     
@@ -164,9 +121,8 @@ def booking_step2(hotel_id):
             )
             db.session.add(booking)
             db.session.flush()
-            print(f"✅ Booking erstellt mit ID: {booking.id}")
+            flash(f'✅ Pending Booking erstellt mit ID: {booking.id}', 'success')
             
-            # Gäste speichern...
             for i in range(num_guests):
                 first_name = request.form.get(f'firstname_{i}')
                 last_name = request.form.get(f'lastname_{i}')
@@ -197,11 +153,9 @@ def booking_step2(hotel_id):
             
         except Exception as e:
             db.session.rollback()
-            print(f"❌ Fehler beim Speichern: {str(e)}")
             flash(f'❌ Fehler beim Speichern: {str(e)}', 'danger')
             return redirect(url_for('views.booking_step2', hotel_id=hotel_id))
-    
-    print(f"📄 GET Request - Zeige booking_step2.html")
+
     return render_template('booking_step2.html', 
                          user=current_user, 
                          hotel=hotel,
@@ -225,18 +179,15 @@ def booking_review(hotel_id):
             return redirect(url_for('views.booking_step1', hotel_id=hotel_id))
 
         try:
-            # 📅 Daten aus Session
             checkin_date = parse_date_flexible(booking_data['checkin'])
             checkout_date = parse_date_flexible(booking_data['checkout'])
             nights = (checkout_date - checkin_date).days
             
-            # 💳 KREDITKARTENDATEN AUS FORM
             cardholder = request.form.get('cardholder', '').strip()
             card_number = request.form.get('card_number', '').replace(' ', '')
             expiry = request.form.get('expiry', '').strip()
             cvv = request.form.get('cvv', '').strip()
             
-            # ✅ VALIDIERUNG KREDITKARTE
             if not cardholder or len(cardholder) < 3:
                 flash("❌ Ungültiger Karteninhaber!", "error")
                 return redirect(url_for('views.booking_review', hotel_id=hotel_id))
@@ -253,7 +204,6 @@ def booking_review(hotel_id):
                 flash("❌ Ungültiger CVV!", "error")
                 return redirect(url_for('views.booking_review', hotel_id=hotel_id))
             
-            # 💰 Preisberechnung
             room_type = booking_data.get('room_type', 'standard')
             room_prices = {
                 'standard': hotel.price_per_night,
@@ -270,10 +220,7 @@ def booking_review(hotel_id):
                 (price_per_person * num_adults) + 
                 (price_per_person * 0.5 * num_children)
             )
-            
-            print(f"💰 Finale Berechnung: {nights} Nächte × {price_per_person}€ = {total_price}€")
-            
-            # 📦 BUCHUNG SPEICHERN
+
             booking = Booking(
                 user_id=current_user.id,
                 hotel_id=hotel_id,
@@ -286,14 +233,13 @@ def booking_review(hotel_id):
                 creditcard_name=cardholder,
                 creditcard_number=card_number[-4:],  
                 creditcard_expiry=expiry,
-                creditcard_cvc=cvv,
-                )
+                creditcard_cvc=cvv
+            )
             
             db.session.add(booking)
             db.session.commit()
             
-            print(f"✅ Buchung gespeichert mit ID: {booking.id}")
-            print(f"💳 Kreditkarte: {cardholder} - {card_number[-4:]}")
+            flash(f'✅ Buchung Bestätigt und gespeichert mit ID: {booking.id}', 'success')
             
             session.pop('booking_data', None)
             flash('✅ Buchung erfolgreich abgeschlossen!', 'success')
@@ -302,7 +248,6 @@ def booking_review(hotel_id):
             
         except Exception as e:
             db.session.rollback()
-            print(f"❌ FEHLER: {str(e)}")
             flash(f'❌ Fehler bei der Buchung: {str(e)}', 'error')
             return redirect(url_for('views.booking_review', hotel_id=hotel_id))
 
@@ -311,23 +256,20 @@ def booking_review(hotel_id):
                            hotel=hotel,
                            booking_data=session.get('booking_data') or {})
 
-
-
-
-@views.route('/booking/<int:hotel_id>', methods=['GET','POST']) # Detailseite für ein Hotel
+@views.route('/booking/<int:hotel_id>', methods=['GET','POST'])
 @login_required
 def booking_detail(hotel_id):
     hotel = Hotel.query.get_or_404(hotel_id)
     return render_template("booking_detail.html", user=current_user, hotel=hotel)
 
-@views.route('/booking/results') # Suchergebnisseite
+@views.route('/booking/results') 
 @login_required
 def booking_results():
     city = request.args.get('city')
     hotels = Hotel.query.filter(Hotel.city.ilike(f'%{city}%')).all() if city else []
     return render_template("booking_results.html", user=current_user, hotels=hotels, city=city)
 
-@views.route('/booking/confirmation/<int:booking_id>') # Buchungsbestätigungsseite
+@views.route('/booking/confirmation/<int:booking_id>')
 @login_required
 def booking_confirmation(booking_id):
     booking = Booking.query.get_or_404(booking_id)
