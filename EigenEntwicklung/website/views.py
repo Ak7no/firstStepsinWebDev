@@ -35,7 +35,7 @@ def booking_step1(hotel_id):
         checkout_date = request.form.get('checkout')
         total_price = request.form.get('total_price')  
         num_children = request.form.get('num_children', 0)
-        num_adults = request.form.get('num_adults', 1)
+        num_adults = request.form.get('num_adults', 1) 
         room_type = request.form.get('room_type') 
         
         try:

@@ -13,14 +13,13 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     db.init_app(app)
 
-    # >>> Hinzugefügt: Secret Key für Sessions (ersetzen für Produktion)
     app.config.setdefault('SECRET_KEY', 'dev-secret-change-this')
     app.config.setdefault('SESSION_PERMANENT', False)
 
     from .views import views
     from .auth import auth
 
-    app.register_blueprint(views, url_prefix='/')
+    app.register_blueprint(views, url_prefix='/') 
     app.register_blueprint(auth, url_prefix='/')
 
     from .models import User, Hotel, Booking, Guest

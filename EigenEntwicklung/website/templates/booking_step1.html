@@ -99,7 +99,7 @@
 
                     <!-- Zimmer 2 -->
                     <label class="room-card" onclick="selectRoom(this, 'deluxe', 180)">
-                      <input type="radio" name="room_type" value="deluxe" class="room-input">
+                      <input type="radio" name="room_type" value="deluxe" class="room-input" required>
                       <h6>Deluxe Zimmer</h6>
                       <div class="room-price">{{hotel.price_per_night_u1}}€ p.P</div>
                       <div class="room-info">
@@ -110,7 +110,7 @@
 
                     <!-- Zimmer 3 -->
                     <label class="room-card" onclick="selectRoom(this, 'family', 250)">
-                      <input type="radio" name="room_type" value="family" class="room-input">
+                      <input type="radio" name="room_type" value="family" class="room-input" required>
                       <h6>Family Suite</h6>
                       <div class="room-price">{{hotel.price_per_night_u2}}€ p.P</div>
                       <div class="room-info">
@@ -121,7 +121,7 @@
 
                     <!-- Zimmer 4 -->
                     <label class="room-card" onclick="selectRoom(this, 'premium', 350)">
-                      <input type="radio" name="room_type" value="premium" class="room-input">
+                      <input type="radio" name="room_type" value="premium" class="room-input" required>
                       <h6>Premium Suite</h6>
                       <div class="room-price">{{hotel.price_per_night_u3}}€ p.P</div>
                       <div class="room-info">
@@ -298,5 +298,4 @@
     });
   });
 </script>
-
 {% endblock %}

@@ -5,11 +5,8 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style_video_playback.css') }}">
 
 <div class="video-bg-container">
-    <!-- Urlaubsvideo als Hintergrund -->
-    <video autoplay muted loop playsinline><!--poster="https://www.youtube.com/watch?v=39EBp9qt1Sc"-->
+    <video autoplay muted loop playsinline>
         <source src="{{ url_for('static', filename='primVid.mp4') }}" type="video/mp4">
-        <!-- Optional weitere Formate für bessere Kompatibilität -->
-        Dein Browser unterstützt kein HTML5 Video.
     </video>
     <div class="video-bg-overlay"></div>
 
@@ -20,7 +17,7 @@
                 <div class="mb-3">
                     <label for="city" class="form-label">Reiseziel</label>
                     <input type="text" class="form-control" id="city" name="city" required
-                        placeholder="z.B. Berlin, Paris, London...">
+                        placeholder="z.B. Berlin, München, Hamburg...">
                 </div>
                 <button type="submit" class="btn btn-primary">Hotels suchen</button>
             </form>

@@ -8,7 +8,6 @@
 <div class="video-bg-container">
     <video autoplay muted loop playsinline>
         <source src="{{ url_for('static', filename='primVid.mp4') }}" type="video/mp4">
-        Dein Browser unterstützt kein HTML5 Video.
     </video>
     <div class="video-bg-overlay"></div>
 </div>
@@ -26,7 +25,6 @@
         <p><strong>Kartennummer:</strong> **** **** **** {{ booking.creditcard_number }}</p>
         <p><strong>Verfallsdatum:</strong> {{ booking.creditcard_expiry }}</p>
         <hr class="my-4">
-
         <a href="/" class="btn btn-primary btn-lg">
             Zur Startseite
         </a>
