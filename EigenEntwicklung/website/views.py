@@ -1,36 +1,27 @@
 from datetime import date, datetime
 import json 
 from flask import Blueprint, jsonify, render_template, request, flash, redirect, url_for, session
-from flask_login import login_required, current_user
 from .models import Guest, Hotel, Booking
 from . import db
 
 views = Blueprint('views', __name__)
 
 @views.route('/', methods=['GET', 'POST'])
-@login_required
 def booking_search():
     if request.method == 'POST':
         city = request.form.get('city')
-        checkin = request.form.get('checkin')
-        checkout = request.form.get('checkout')
-
         hotels = Hotel.query.filter(Hotel.city.ilike(f'%{city}%')).all()
         return render_template("booking_results.html", 
-                             user=current_user,
                              hotels=hotels,
                              city=city)
     
-    return render_template("booking_search.html", user=current_user)
+    return render_template("booking_search.html")
 
 @views.route('/booking/<int:hotel_id>/step1', methods=['GET', 'POST'])
-@login_required
 def booking_step1(hotel_id):
     hotel = Hotel.query.get_or_404(hotel_id)
     
     if request.method == 'POST':
-        print("POST Request empfangen in booking_step1")
-        
         checkin_date = request.form.get('checkin')
         checkout_date = request.form.get('checkout')
         total_price = request.form.get('total_price')  
@@ -62,7 +53,7 @@ def booking_step1(hotel_id):
         print(f"Session gespeichert: {session['booking_data']}")
         return redirect(url_for('views.booking_step2', hotel_id=hotel_id))
     
-    return render_template('booking_step1.html', user=current_user, hotel=hotel)
+    return render_template('booking_step1.html', hotel=hotel)
 
 
 from datetime import datetime
@@ -88,7 +79,6 @@ def parse_date_flexible(date_string):
 
 
 @views.route('/booking/<int:hotel_id>/step2', methods=['GET', 'POST']) # Zweiter Schritt der Buchung
-@login_required 
 def booking_step2(hotel_id):
     hotel = Hotel.query.get_or_404(hotel_id)
     
@@ -110,7 +100,6 @@ def booking_step2(hotel_id):
         try:
             booking = Booking(
                 hotel_id=hotel_id,
-                user_id=current_user.id,
                 checkin_date=parse_date_flexible(checkin),
                 checkout_date=parse_date_flexible(checkout),
                 num_guests_adult=int(num_guests_adult),
@@ -156,8 +145,7 @@ def booking_step2(hotel_id):
             flash(f'❌ Fehler beim Speichern: {str(e)}', 'danger')
             return redirect(url_for('views.booking_step2', hotel_id=hotel_id))
 
-    return render_template('booking_step2.html', 
-                         user=current_user, 
+    return render_template('booking_step2.html',  
                          hotel=hotel,
                          hotel_id=hotel_id,
                          num_guests=num_guests,
@@ -167,7 +155,6 @@ def booking_step2(hotel_id):
 
 
 @views.route('/booking/<int:hotel_id>/review', methods=['GET', 'POST'])
-@login_required
 def booking_review(hotel_id):
     hotel = Hotel.query.get_or_404(hotel_id)
     
@@ -222,7 +209,6 @@ def booking_review(hotel_id):
             )
 
             booking = Booking(
-                user_id=current_user.id,
                 hotel_id=hotel_id,
                 checkin_date=checkin_date,
                 checkout_date=checkout_date,
@@ -252,26 +238,22 @@ def booking_review(hotel_id):
             return redirect(url_for('views.booking_review', hotel_id=hotel_id))
 
     return render_template('booking_review.html',
-                           user=current_user,
                            hotel=hotel,
                            booking_data=session.get('booking_data') or {})
 
 @views.route('/booking/<int:hotel_id>', methods=['GET','POST'])
-@login_required
 def booking_detail(hotel_id):
     hotel = Hotel.query.get_or_404(hotel_id)
-    return render_template("booking_detail.html", user=current_user, hotel=hotel)
+    return render_template("booking_detail.html", hotel=hotel)
 
 @views.route('/booking/results') 
-@login_required
 def booking_results():
     city = request.args.get('city')
     hotels = Hotel.query.filter(Hotel.city.ilike(f'%{city}%')).all() if city else []
-    return render_template("booking_results.html", user=current_user, hotels=hotels, city=city)
+    return render_template("booking_results.html", hotels=hotels, city=city)
 
 @views.route('/booking/confirmation/<int:booking_id>')
-@login_required
 def booking_confirmation(booking_id):
     booking = Booking.query.get_or_404(booking_id)
-    return render_template('booking_confirmation.html', user=current_user, booking=booking)
+    return render_template('booking_confirmation.html', booking=booking)
 

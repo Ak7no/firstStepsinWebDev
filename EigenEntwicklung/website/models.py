@@ -4,12 +4,6 @@ from sqlalchemy.sql import func #func gets the current timestamp
 from datetime import date, datetime
 from flask_sqlalchemy import SQLAlchemy
 
-class User(db.Model, UserMixin): 
-    id = db.Column(db.Integer, primary_key=True) 
-    email = db.Column(db.String(150), unique=True) 
-    password = db.Column(db.String(150)) 
-    first_name = db.Column(db.String(150)) 
-   
 class Hotel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(150), nullable=False)
@@ -28,9 +22,19 @@ class Hotel(db.Model):
     hotel_website = db.Column(db.String(200))
     hotel_street = db.Column(db.String(200))
 
+class Guest(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    booking_id = db.Column(db.Integer, db.ForeignKey('booking.id'), nullable=False)
+    first_name = db.Column(db.String(100), nullable=False)
+    last_name = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(120), nullable=False)
+    phone = db.Column(db.String(20))
+    birthdate = db.Column(db.Date)
+    guest_number = db.Column(db.Integer)
+
 class Booking(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    guest_id =db.Column(db.Integer, db.ForeignKey('guest.id'))
     hotel_id = db.Column(db.Integer, db.ForeignKey('hotel.id'), nullable=False)
     checkin_date = db.Column(db.Date, nullable=False)    
     checkout_date = db.Column(db.Date, nullable=False)  
@@ -44,14 +48,4 @@ class Booking(db.Model):
     creditcard_number = db.Column(db.String(20))
     creditcard_expiry = db.Column(db.String(7)) 
     creditcard_cvc = db.Column(db.String(4))
-
-class Guest(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    booking_id = db.Column(db.Integer, db.ForeignKey('booking.id'), nullable=False)
-    first_name = db.Column(db.String(100), nullable=False)
-    last_name = db.Column(db.String(100), nullable=False)
-    email = db.Column(db.String(120), nullable=False)
-    phone = db.Column(db.String(20))
-    birthdate = db.Column(db.Date)
-    guest_number = db.Column(db.Integer)
 
