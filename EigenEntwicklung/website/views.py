@@ -80,7 +80,6 @@ def booking_step2(hotel_id):
     num_guests = num_guests_adult + num_guests_child
     
     if request.method == 'POST':    
-        print("POST Request in booking_step2 - Speichere in Session")
         
         guests_data = []
         

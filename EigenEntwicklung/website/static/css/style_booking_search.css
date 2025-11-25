@@ -41,13 +41,13 @@
 }
 
 .form-control:focus {
-    border-color: #667eea;
+    border-color: #003580;
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
     outline: none;
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #003580;
     border: none;
     border-radius: 8px;
     padding: 0.75rem;

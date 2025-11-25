@@ -24,8 +24,13 @@
         <p><strong>Kartennummer:</strong> **** **** **** {{ booking.creditcard_number }}</p>
         <p><strong>Verfallsdatum:</strong> {{ booking.creditcard_expiry }}</p>
         <hr class="my-4">
+
+        <button onclick="window.print()" class="btn btn-secondary btn-lg mr-2">
+            🖨️ Als PDF speichern / Drucken
+        </button>
+
         <a href="/" class="btn btn-primary btn-lg">
-            Zur Startseite
+            🏨 Zur Startseite
         </a>
     </div>
 </div>
