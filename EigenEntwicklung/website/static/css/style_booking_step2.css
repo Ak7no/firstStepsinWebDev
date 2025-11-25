@@ -1,94 +1,20 @@
-body {
+/* Spezifisch für Booking Step 2 */
 
-    /* Content über dem Video */
-    .content-wrapper {
-        position: relative;
-        z-index: 1;
-        min-height: 100vh;
-        padding: 2rem 0;
-    }
+.alert {
+    background: rgba(255, 255, 255, 0.95);
+    border-left: 4px solid #17a2b8;
+}
 
-    /*Begin Card and Main Box*/
-    /* GROSSE SEMI-TRANSPARENTE BOX */
-    .main-container-box {
-        background: rgba(255, 255, 255, 0.92);
-        border-radius: 20px;
-        padding: 2.5rem;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-        backdrop-filter: blur(10px);
-        margin: 0 auto;
-        max-width: 1400px;
-    }
+.guest-section {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 4px solid #003580;
+}
 
-    /* Titel innerhalb der Box */
-    .main-container-box h1 {
-        color: #333;
-        text-shadow: none;
-        margin-bottom: 2rem;
-        font-weight: 700;
-        border-bottom: 3px solid #007bff;
-        padding-bottom: 1rem;
-    }
-
-    /* Cards innerhalb der Box */
-    .card {
-        background: rgba(255, 255, 255, 0.98);
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        margin-bottom: 1.5rem;
-    }
-
-    .card-header {
-        background: rgba(0, 123, 255, 0.1);
-        border-bottom: 2px solid #23387E;
-    }
-
-    /* Ende Card and Main Box*/
-
-
-    .alert {
-        background: rgba(255, 255, 255, 0.95);
-        border-left: 4px solid #17a2b8;
-    }
-
-    /* Gästeinformationsabschnitt */
-    .guest-section {
-        background: #f8f9fa;
-        padding: 15px;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        border-left: 4px solid #003580;
-    }
-
-    .guest-section h6 {
-        color: #003580;
-        margin-bottom: 15px;
-        font-weight: 600;
-    }
-
-    .btn-hotel-website {
-        display: inline-block;
-        padding: 6px 15px;
-        background: linear-gradient(135deg, #007bff, #0056b3);
-        color: white;
-        text-decoration: none;
-        border-radius: 25px;
-        font-weight: 600;
-        font-size: 0.85rem;
-        transition: all 0.3s ease;
-        /* box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3); */
-        border: none;
-        cursor: pointer;
-    }
-
-    .btn-hotel-website:hover {
-        background: linear-gradient(135deg, #0056b3, #003d82);
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0, 123, 255, 0.5);
-        color: white;
-    }
-
-    .btn-hotel-website:active {
-        transform: translateY(0);
-    }
+.guest-section h6 {
+    color: #003580;
+    margin-bottom: 15px;
+    font-weight: 600;
 }

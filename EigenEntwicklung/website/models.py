@@ -1,6 +1,4 @@
 from . import db #. uses the current package
-from flask_login import UserMixin #Special class that helps to create a user table / model 
-from sqlalchemy.sql import func #func gets the current timestamp
 from datetime import date, datetime
 from flask_sqlalchemy import SQLAlchemy
 

@@ -3,7 +3,6 @@
 {% block content %}
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style_booking_detail.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style_video_playback.css') }}">
 
 <!--Video Hintergrund-->
 <div class="video-bg-container">
@@ -217,7 +216,7 @@
 
       L.marker(hotelLocation)
         .addTo(map)
-        .bindPopup("<b>{{ hotel.name }}</b><br>{{ hotel.address }}")
+        .bindPopup("<b>{{ hotel.name }}</b><br>{{ hotel.hotel_street }}")
         .openPopup();
     }
 

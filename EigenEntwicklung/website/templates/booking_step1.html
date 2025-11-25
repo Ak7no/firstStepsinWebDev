@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Buchung - {{ hotel.name }}{% endblock %}
 {% block content %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style_video_playback.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style_progress_bar.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style_booking_step1.css') }}">
 <!-- Litepicker CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css">
@@ -231,12 +229,10 @@
     const pricePerPerson = roomPrices[selectedRoom.value] || 0;
     const totalGuests = numAdults + numChildren;
     const pricePerAdult = pricePerPerson * numAdults;
-    const pricePerChild = (pricePerPerson * 0.5) * numChildren; // Kinder zahlen 50%
+    const pricePerChild = (pricePerPerson * 0.5) * numChildren; 
     const totalPrice = (nights * (pricePerAdult + pricePerChild));
     document.getElementById('total_price').textContent = totalPrice.toFixed(2) + '€';
-    document.getElementById('total_price_input').value = totalPrice.toFixed(2);  // ← NEU!
-
-    console.log(`💰 Preis berechnet: ${totalPrice.toFixed(2)}€`);
+    document.getElementById('total_price_input').value = totalPrice.toFixed(2); 
   }
 
   function updateGuest(inputId, change) {

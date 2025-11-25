@@ -1,30 +1,25 @@
-body {
-    /* Content über dem Video */
-    .content-wrapper {
-        position: relative;
-        z-index: 1;
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+/* Spezifisch für Bestätigungsseite */
+.content-wrapper {
+    /* Zentriert die Confirmation Box spezifisch */
+    align-items: center;
+    justify-content: center;
+}
 
-    .confirmation-box {
-        background: rgba(255, 255, 255, 0.95);
-        padding: 3rem;
-        border-radius: 15px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-        max-width: 600px;
-        text-align: center;
-    }
+.confirmation-box {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 3rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    text-align: center;
+}
 
-    h1 {
-        color: #28a745;
-        margin-bottom: 2rem;
-    }
+h1 {
+    color: #28a745;
+    margin-bottom: 2rem;
+}
 
-    .confirmation-box p {
-        font-size: 1.1rem;
-        margin-bottom: 1rem;
-    }
+.confirmation-box p {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
 }
