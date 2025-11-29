@@ -9,10 +9,268 @@ if __name__ == '__main__':
         if not Hotel.query.first():
             # Füge Testhotels hinzu in der DB 
             hotels = [
-                  Hotel(name='Maritim proArt Hotel Berlin', city='Berlin', price_per_night=279, price_per_night_u1=328, price_per_night_u2=452, price_per_night_u3=691, description='Ein komfortables Hotel in Berlin.',description_long='Erleben Sie Berlin von seiner schönsten Seite in unserem zentral gelegenen Hotel. Direkt im Herzen der Hauptstadt erwarten Sie moderne Zimmer mit urbanem Flair und komfortabler Ausstattung. Starten Sie Ihren Tag mit einem reichhaltigen Frühstück und erkunden Sie die vielfältigen Sehenswürdigkeiten wie das Brandenburger Tor, die Museumsinsel oder den Alexanderplatz, die alle bequem erreichbar sind. Nach einem ereignisreichen Tag entspannen Sie in unserer stilvollen Lounge oder genießen regionale und internationale Spezialitäten in unserem hauseigenen Restaurant. Unser engagiertes Team sorgt dafür, dass Ihr Aufenthalt in Berlin einzigartig und rundum angenehm wird.', service_details='Kostenloses WLAN, Fitnessraum, 24-Stunden-Rezeption, Zimmerservice, Bar/Lounge', latitude=52.5205, longtitude=13.3855, hotel_phone='0800 33 8 33 30', hotel_email='mymaritim@maritim.de',hotel_website='https://www.maritim.de/de/hotels/deutschland/proarte-hotel-berlin/unser-hotel?utm_campaign=yext&utm_source=bpa&utm_medium=local', hotel_street='Friedrichstraße 151, 10117 Berlin'),
-                  Hotel(name='Mandarin Oriental', city='München', price_per_night=713, price_per_night_u1=825, price_per_night_u2=971, price_per_night_u3=1203,description='Ein luxuriöses Hotel in München.',description_long='Willkommen in unserem Hotel im Herzen Münchens! Genießen Sie bayerische Gastfreundschaft in modernen, liebevoll eingerichteten Zimmern. Die zentrale Lage ermöglicht Ihnen einen schnellen Zugang zu den wichtigsten Attraktionen der Stadt, wie dem Marienplatz, dem Englischen Garten oder dem berühmten Viktualienmarkt. Nach einem Tag voller Eindrücke können Sie in unserem Wellnessbereich entspannen oder sich in unserem Restaurant mit regionalen Spezialitäten verwöhnen lassen. Unser freundliches Personal steht Ihnen jederzeit mit Rat und Tat zur Seite und macht Ihren Aufenthalt in München zu einem besonderen Erlebnis.', service_details='Kostenloses WLAN, Fitnessraum, 24-Stunden-Rezeption, Zimmerservice, Bar/Lounge',  latitude= 48.1372989, longtitude= 11.5807333, hotel_phone='+49 (89) 290 980', hotel_email='momuc-reservations@mohg.com', hotel_website='https://www.mandarinoriental.com/de/munich/altstadt', hotel_street='Neuturmstraße 1, 80331 München'),
-                  Hotel(name='Fairmont Hotel Four Seasons', city='Hamburg', price_per_night=890, price_per_night_u1=987, price_per_night_u2=1067, price_per_night_u3=1467,description='Ein schönes Hotel in Hamburg.', description_long='Unser Hotel vereint zeitlose Eleganz mit modernem Komfort und bietet Ihnen den perfekten Ort zum Entspannen und Genießen. Die stilvoll eingerichteten Zimmer sind mit hochwertigen Materialien ausgestattet und laden zum Wohlfühlen ein. Beginnen Sie den Tag mit einem abwechslungsreichen Frühstücksbuffet, entdecken Sie die vielfältigen Freizeitmöglichkeiten in der Umgebung oder lassen Sie sich in unserem hauseigenen Restaurant kulinarisch verwöhnen. Dank der zentralen Lage erreichen Sie Sehenswürdigkeiten und Einkaufsmöglichkeiten bequem zu Fuß. Unser freundliches Team steht Ihnen jederzeit zur Seite und sorgt dafür, dass Ihr Aufenthalt rundum angenehm und unvergesslich wird.', service_details='Kostenloses WLAN, Fitnessraum, 24-Stunden-Rezeption, Zimmerservice, Bar/Lounge', latitude = 53.5555409, longtitude= 9.9915198, hotel_phone='+49 4034940', hotel_email='hamburg@fairmont.com', hotel_website='https://www.fairmont.com/de.html', hotel_street='Neuer Jungfernstieg 9-14, 20354 Hamburg'),
-                  Hotel(name='Excelsior Hotel Ernst', city='Köln', price_per_night=345, price_per_night_u1=410, price_per_night_u2=580, price_per_night_u3=890, description='Traditionelles Luxushotel am Kölner Dom.', description_long='Residieren Sie direkt gegenüber dem Kölner Dom in einem der traditionsreichsten Grand Hotels Deutschlands. Seit über 150 Jahren steht unser Haus für zeitlose Eleganz und individuellen Service. Genießen Sie den Afternoon Tea in der Lobby oder exzellente Küche in unserem Sternerestaurant. Die zentrale Lage ermöglicht es Ihnen, die Altstadt, den Rhein und die Museen bequem zu Fuß zu erreichen. Unsere luxuriösen Zimmer und Suiten bieten Ihnen einen Rückzugsort der Ruhe inmitten des lebendigen Treibens der Domstadt.', service_details='Kostenloses WLAN, Fitnessraum, Sauna, 24-Stunden-Rezeption, Concierge-Service, Gourmet-Restaurant', latitude=50.9413, longtitude=6.9573, hotel_phone='+49 221 2701', hotel_email='info@excelsior-hotel-ernst.de', hotel_website='https://www.excelsiorhotelernst.com', hotel_street='Trankgasse 1-5, 50667 Köln'),
+                   Hotel(name='Maritim proArt Hotel Berlin', city='Berlin', price_per_night=279, price_per_night_u1=328, price_per_night_u2=452, price_per_night_u3=691, 
+          description='Ein komfortables Hotel in Berlin.',
+          description_long='Erleben Sie Berlin von seiner schönsten Seite in unserem zentral gelegenen Hotel. Direkt im Herzen der Hauptstadt erwarten Sie moderne Zimmer mit urbanem Flair und komfortabler Ausstattung. Starten Sie Ihren Tag mit einem reichhaltigen Frühstück und erkunden Sie die vielfältigen Sehenswürdigkeiten wie das Brandenburger Tor, die Museumsinsel oder den Alexanderplatz.', 
+          service_details='Kostenloses WLAN, Fitnessraum, 24-Stunden-Rezeption, Zimmerservice, Bar/Lounge', 
+          latitude=52.5205, longtitude=13.3855, hotel_phone='0800 33 8 33 30', hotel_email='mymaritim@maritim.de', hotel_website='https://www.maritim.de/de/hotels/deutschland/proarte-hotel-berlin/unser-hotel', hotel_street='Friedrichstraße 151, 10117 Berlin'),
+
+    Hotel(name='Mandarin Oriental', city='München', price_per_night=713, price_per_night_u1=825, price_per_night_u2=971, price_per_night_u3=1203,
+          description='Ein luxuriöses Hotel in München.',
+          description_long='Willkommen in unserem Hotel im Herzen Münchens! Genießen Sie bayerische Gastfreundschaft in modernen, liebevoll eingerichteten Zimmern. Die zentrale Lage ermöglicht Ihnen einen schnellen Zugang zu den wichtigsten Attraktionen der Stadt, wie dem Marienplatz, dem Englischen Garten oder dem berühmten Viktualienmarkt.', 
+          service_details='Kostenloses WLAN, Fitnessraum, 24-Stunden-Rezeption, Zimmerservice, Bar/Lounge',  
+          latitude=48.1372989, longtitude=11.5807333, hotel_phone='+49 (89) 290 980', hotel_email='momuc-reservations@mohg.com', hotel_website='https://www.mandarinoriental.com/de/munich/altstadt', hotel_street='Neuturmstraße 1, 80331 München'),
+
+    Hotel(name='Fairmont Hotel Four Seasons', city='Hamburg', price_per_night=890, price_per_night_u1=987, price_per_night_u2=1067, price_per_night_u3=1467,
+          description='Ein schönes Hotel in Hamburg.', 
+          description_long='Unser Hotel vereint zeitlose Eleganz mit modernem Komfort und bietet Ihnen den perfekten Ort zum Entspannen und Genießen. Die stilvoll eingerichteten Zimmer sind mit hochwertigen Materialien ausgestattet und laden zum Wohlfühlen ein.', 
+          service_details='Kostenloses WLAN, Fitnessraum, 24-Stunden-Rezeption, Zimmerservice, Bar/Lounge', 
+          latitude=53.5555409, longtitude=9.9915198, hotel_phone='+49 4034940', hotel_email='hamburg@fairmont.com', hotel_website='https://www.fairmont.com/de.html', hotel_street='Neuer Jungfernstieg 9-14, 20354 Hamburg'),
+
+    Hotel(name='Excelsior Hotel Ernst', city='Köln', price_per_night=345, price_per_night_u1=410, price_per_night_u2=580, price_per_night_u3=890, 
+          description='Traditionelles Luxushotel am Kölner Dom.', 
+          description_long='Residieren Sie direkt gegenüber dem Kölner Dom in einem der traditionsreichsten Grand Hotels Deutschlands. Seit über 150 Jahren steht unser Haus für zeitlose Eleganz und individuellen Service. Genießen Sie den Afternoon Tea in der Lobby oder exzellente Küche in unserem Sternerestaurant.', 
+          service_details='Kostenloses WLAN, Fitnessraum, Sauna, 24-Stunden-Rezeption, Concierge-Service, Gourmet-Restaurant', 
+          latitude=50.9413, longtitude=6.9573, hotel_phone='+49 221 2701', hotel_email='info@excelsior-hotel-ernst.de', hotel_website='https://www.excelsiorhotelernst.com', hotel_street='Trankgasse 1-5, 50667 Köln'),
+
+    # --- RAVENSBURG & WEINGARTEN (Wie gewünscht) ---
+
+    Hotel(name='Hotel Kaiserhof Ravensburg', city='Ravensburg', price_per_night=125, price_per_night_u1=155, price_per_night_u2=190, price_per_night_u3=250,
+          description='Traditionsreiches Hotel im Herzen von Ravensburg.',
+          description_long='Das Hotel Kaiserhof liegt direkt im historischen Zentrum der Stadt der Türme und Tore. Wir verbinden schwäbische Gastlichkeit mit modernem Komfort. Unser Haus ist der ideale Ausgangspunkt, um die Altstadt zu erkunden oder Geschäftstermine in der Region wahrzunehmen. Genießen Sie regionale Köstlichkeiten in unserem renommierten Restaurant Hermanns.',
+          service_details='Kostenloses WLAN, Restaurant, Parkplatz, Konferenzräume, Frühstücksbuffet',
+          latitude=47.7813, longtitude=9.6139, hotel_phone='+49 751 36290', hotel_email='info@kaiserhof-ravensburg.de', hotel_website='https://www.kaiserhof-ravensburg.de', hotel_street='Marktstraße 45, 88212 Ravensburg'),
+
+    Hotel(name='Hotel Residenz', city='Ravensburg', price_per_night=110, price_per_night_u1=135, price_per_night_u2=160, price_per_night_u3=210,
+          description='Modernes Stadthotel in zentraler Lage.',
+          description_long='Willkommen im Hotel Residenz in Ravensburg. Genießen Sie die entspannte Atmosphäre in unseren großzügigen Zimmern und Suiten. Unser Hotel bietet Ihnen neben einer hauseigenen Bar auch einen Wellnessbereich, um nach einem langen Tag zu entspannen. Die Nähe zum Bahnhof und zur Fußgängerzone macht uns zur ersten Wahl für Reisende.',
+          service_details='WLAN inklusive, Haustiere erlaubt, Bar, Tiefgarage, Sauna',
+          latitude=47.7825, longtitude=9.6150, hotel_phone='+49 751 36980', hotel_email='info@residenz-ravensburg.de', hotel_website='https://www.residenz-ravensburg.de', hotel_street='Herrenstraße 16, 88212 Ravensburg'),
+
+    Hotel(name='Rebgarten Hotel Schulgasse', city='Ravensburg', price_per_night=140, price_per_night_u1=165, price_per_night_u2=195, price_per_night_u3=240,
+          description='Charmantes Boutique-Hotel am Rande der Altstadt.',
+          description_long='Das Rebgarten Hotel Schulgasse ist ein Juwel der Ruhe inmitten der lebendigen Stadt. Mit individuell gestalteten Zimmern und einem Fokus auf persönlichem Service bieten wir Ihnen ein Zuhause auf Zeit. Unser Frühstück besteht aus lokalen Bio-Produkten, die Ihren Tag perfekt starten lassen.',
+          service_details='Bio-Frühstück, Highspeed-WLAN, Ruhige Lage, Fahrradverleih',
+          latitude=47.7801, longtitude=9.6120, hotel_phone='+49 751 36240', hotel_email='info@rebgarten.de', hotel_website='https://www.rebgarten.de', hotel_street='Schulgasse 15, 88212 Ravensburg'),
+
+    Hotel(name='Best Western Parkhotel Weingarten', city='Weingarten', price_per_night=115, price_per_night_u1=140, price_per_night_u2=180, price_per_night_u3=220,
+          description='Komfortables 4-Sterne Hotel direkt am Kultur- und Kongresszentrum.',
+          description_long='Das Best Western Parkhotel in Weingarten bietet Ihnen erstklassigen Service in direkter Nachbarschaft zur berühmten Basilika. Unsere Zimmer sind modern ausgestattet und bieten teilweise einen Blick auf das historische Kloster. Das Restaurant serviert internationale und schwäbische Küche auf höchstem Niveau.',
+          service_details='WLAN, Restaurant, Bar, Tagungsräume, Parkplätze',
+          latitude=47.8087, longtitude=9.6415, hotel_phone='+49 751 5040', hotel_email='info@hotel-weingarten.bestwestern.de', hotel_website='https://www.bestwestern.de', hotel_street='Abt-Hyller-Straße 37-39, 88250 Weingarten'),
+
+    Hotel(name='Akzent Hotel Altdorfer Hof', city='Weingarten', price_per_night=105, price_per_night_u1=130, price_per_night_u2=165, price_per_night_u3=200,
+          description='Familiäres Hotel mit exzellenter Küche.',
+          description_long='Im Altdorfer Hof erleben Sie echte oberschwäbische Gastfreundschaft. Unser familiengeführtes Haus ist bekannt für sein hervorragendes Restaurant, das saisonale Spezialitäten serviert. Die Zimmer sind gemütlich eingerichtet und bieten alles, was Sie für einen erholsamen Aufenthalt in der Barockstadt Weingarten benötigen.',
+          service_details='Restaurant, WLAN, Kostenlose Parkplätze, Familienzimmer, Terrasse',
+          latitude=47.8112, longtitude=9.6385, hotel_phone='+49 751 50090', hotel_email='info@altdorfer-hof.de', hotel_website='https://www.altdorfer-hof.de', hotel_street='Burachstraße 12, 88250 Weingarten'),
+    
+    Hotel(name='Gut Hügle Erlebnishof', city='Ravensburg', price_per_night=150, price_per_night_u1=180, price_per_night_u2=220, price_per_night_u3=300,
+          description='Einzigartiges Erlebnis-Resort im Grünen.',
+          description_long='Gut Hügle bietet eine einzigartige Kombination aus Bauernhof-Erlebnis und modernem Hotelkomfort. Etwas außerhalb von Ravensburg gelegen, ist es der perfekte Ort für Familien und Erholungssuchende. Genießen Sie unser Hofrestaurant, die Maislabyrinth-Saison oder entspannen Sie im Spa-Bereich.',
+          service_details='Spa & Wellness, Restaurant, Kinderfreundlich, E-Bike Verleih, Bauernhof-Erlebnis',
+          latitude=47.7650, longtitude=9.6520, hotel_phone='+49 751 1895000', hotel_email='buchung@guthuegle.de', hotel_website='https://www.guthuegle.de', hotel_street='Bottenreute 5-7, 88214 Ravensburg'),
+
+    # --- WEITERE ECHTE DEUTSCHE TOP-HOTELS (Erweiterung) ---
+
+    Hotel(name='Hotel Adlon Kempinski', city='Berlin', price_per_night=450, price_per_night_u1=550, price_per_night_u2=800, price_per_night_u3=1500,
+          description='Das legendäre Luxushotel am Brandenburger Tor.',
+          description_long='Das Hotel Adlon Kempinski ist eine Ikone der Hotellerie. Direkt am Pariser Platz gelegen, bietet es Luxus pur. Speisen Sie im 2-Sterne-Restaurant Lorenz Adlon Esszimmer oder entspannen Sie im exklusiven Spa. Die Geschichte Berlins umgibt Sie hier in jedem Detail.',
+          service_details='Butler-Service, 3 Restaurants, Pool, Spa, Limousinenservice',
+          latitude=52.5163, longtitude=13.3808, hotel_phone='+49 30 22610', hotel_email='hotel.adlon@kempinski.com', hotel_website='https://www.kempinski.com/en/berlin/hotel-adlon', hotel_street='Unter den Linden 77, 10117 Berlin'),
+
+    Hotel(name='Bayerischer Hof', city='München', price_per_night=420, price_per_night_u1=520, price_per_night_u2=700, price_per_night_u3=1100,
+          description='Tradition und Moderne im Herzen Münchens.',
+          description_long='Der Bayerische Hof ist eine Institution in München. Mit 5 Restaurants, 6 Bars und einem atemberaubenden Spa über den Dächern der Stadt bleiben keine Wünsche offen. Das hauseigene Kino und das Theater machen den Aufenthalt zu einem kulturellen Erlebnis.',
+          service_details='Rooftop Spa, Kino, Theater, 5 Restaurants, Nachtclub',
+          latitude=48.1403, longtitude=11.5734, hotel_phone='+49 89 21200', hotel_email='info@bayerischerhof.de', hotel_website='https://www.bayerischerhof.de', hotel_street='Promenadeplatz 2-6, 80333 München'),
+
+    Hotel(name='Brenners Park-Hotel & Spa', city='Baden-Baden', price_per_night=550, price_per_night_u1=650, price_per_night_u2=850, price_per_night_u3=1200,
+          description='Elegantes Grandhotel inmitten eines privaten Parks.',
+          description_long='In Baden-Baden erwartet Sie mit dem Brenners Park-Hotel & Spa eine Oase der Ruhe und des Luxus. Das Hotel ist weltweit bekannt für sein medizinisches Spa und die exklusive Lage an der Lichtentaler Allee. Traditioneller Charme trifft hier auf modernste Wellness-Konzepte.',
+          service_details='Destination Spa, Medical Care, Parkanlage, Gourmet-Küche, Innenpool',
+          latitude=48.7565, longtitude=8.2415, hotel_phone='+49 7221 9000', hotel_email='information@brenners.com', hotel_website='https://www.oetkercollection.com/hotels/brenners-park-hotel-spa', hotel_street='Schillerstraße 4/6, 76530 Baden-Baden'),
+
+    Hotel(name='The Fontenay', city='Hamburg', price_per_night=380, price_per_night_u1=480, price_per_night_u2=650, price_per_night_u3=950,
+          description='Modern Luxury an der Außenalster.',
+          description_long='Das The Fontenay ist ein Abbild moderner Hamburger Lebensart. Die organische Architektur spiegelt den Flusslauf der Alster wider. Genießen Sie den Panoramablick vom Infinity-Pool auf dem Dach oder dinieren Sie im Sterne-Restaurant Lakeside.',
+          service_details='Infinity Pool, Rooftop Bar, Spa, Parkservice, Alsterblick',
+          latitude=53.5658, longtitude=10.0035, hotel_phone='+49 40 605 6605 0', hotel_email='info@thefontenay.com', hotel_website='https://www.thefontenay.com', hotel_street='Fontenay 10, 20354 Hamburg'),
+
+    Hotel(name='Steigenberger Frankfurter Hof', city='Frankfurt am Main', price_per_night=280, price_per_night_u1=350, price_per_night_u2=490, price_per_night_u3=750,
+          description='Historisches Grandhotel im Bankenviertel.',
+          description_long='Seit 1876 residieren Gäste im Steigenberger Frankfurter Hof. Nur wenige Schritte vom Willy-Brandt-Platz und der Shoppingmeile Zeil entfernt, bietet das Haus puren Luxus. Der Wellnessbereich und das Sternerestaurant Français runden das Angebot ab.',
+          service_details='Spa, Michelin-Restaurant, Zigarren-Lounge, Concierge, Business Center',
+          latitude=50.1105, longtitude=8.6757, hotel_phone='+49 69 21502', hotel_email='frankfurter-hof@steigenberger.com', hotel_website='https://www.steigenberger.com', hotel_street='Am Kaiserplatz, 60311 Frankfurt am Main'),
+
+    Hotel(name='Schloss Elmau Luxury Spa Retreat', city='Krün', price_per_night=600, price_per_night_u1=750, price_per_night_u2=1100, price_per_night_u3=1800,
+          description='Exklusives Wellness-Resort in den bayerischen Alpen.',
+          description_long='Schloss Elmau ist ein Cultural Hideaway der Extraklasse. Eingebettet in die unberührte Natur der Alpen bietet es mehrere Spas, Konzertsäle und Restaurants. Es ist der perfekte Ort für körperliche Erholung und geistige Inspiration.',
+          service_details='6 Spas, Yoga-Retreats, Konzertsaal, Buchhandlung, Kinderbetreuung',
+          latitude=47.4616, longtitude=11.1878, hotel_phone='+49 8823 180', hotel_email='schloss@elmau.de', hotel_website='https://www.schloss-elmau.de', hotel_street='In Elmau 2, 82493 Krün'),
+
+    Hotel(name='Hotel Traube Tonbach', city='Baiersbronn', price_per_night=310, price_per_night_u1=390, price_per_night_u2=510, price_per_night_u3=720,
+          description='Das Feinschmecker-Hotel im Schwarzwald.',
+          description_long='Die Traube Tonbach ist seit Generationen in Familienbesitz und steht für Schwarzwälder Tradition und Weltklasse-Küche. Die Schwarzwaldstube ist eines der besten Restaurants Europas. Entspannen Sie im weitläufigen Wellnessbereich oder erkunden Sie den Nationalpark.',
+          service_details='3 Michelin-Sterne Restaurant, Kochschule, Wanderführer, Wellness, Kids Court',
+          latitude=48.5292, longtitude=8.3695, hotel_phone='+49 7442 4920', hotel_email='reservations@traube-tonbach.de', hotel_website='https://www.traube-tonbach.de', hotel_street='Tonbachstraße 237, 72270 Baiersbronn'),
+
+    Hotel(name='Le Méridien Stuttgart', city='Stuttgart', price_per_night=180, price_per_night_u1=220, price_per_night_u2=310, price_per_night_u3=450,
+          description='Designhotel am Schlossgarten.',
+          description_long='Das Le Méridien Stuttgart liegt direkt am Schlossgarten und ist nur wenige Gehminuten vom Hauptbahnhof und der Königstraße entfernt. Das Hotel besticht durch modernes Design und einen der größten Hotel-Spas der Stadt. Perfekt für Kulturinteressierte, da die Staatsgalerie direkt gegenüber liegt.',
+          service_details='Großer Spa-Bereich, Indoor-Pool, Restaurant, Bar, Parkgarage',
+          latitude=48.7836, longtitude=9.1869, hotel_phone='+49 711 22210', hotel_email='reservations.stuttgart@lemeridien.com', hotel_website='https://www.marriott.com', hotel_street='Willy-Brandt-Straße 30, 70173 Stuttgart'),
+
+    Hotel(name='Jumeirah Frankfurt', city='Frankfurt am Main', price_per_night=330, price_per_night_u1=400, price_per_night_u2=550, price_per_night_u3=800,
+          description='Hochhaus-Luxus mit Skyline-Blick.',
+          description_long='Im Herzen Frankfurts gelegen, bietet das Jumeirah atemberaubende Ausblicke auf die Skyline. Die Zimmer sind äußerst geräumig und mit modernster Technik ausgestattet. Genießen Sie die kreative Küche im Max on One Grillroom oder Honig vom hoteleigenen Dach.',
+          service_details='Skyline-Blick, Talise Spa, Grillroom, High-Tech Zimmer, Direkter Zugang zum Shopping-Center',
+          latitude=50.1136, longtitude=8.6795, hotel_phone='+49 69 297 2370', hotel_email='jfreservations@jumeirah.com', hotel_website='https://www.jumeirah.com', hotel_street='Thurn-und-Taxis-Platz 2, 60313 Frankfurt am Main'),
+
+    Hotel(name='Wald & Schlosshotel Friedrichsruhe', city='Zweiflingen', price_per_night=390, price_per_night_u1=490, price_per_night_u2=620, price_per_night_u3=850,
+          description='Deutschlands führendes Wellnesshotel.',
+          description_long='Das Wald & Schlosshotel Friedrichsruhe setzt Maßstäbe im Bereich Wellness und Kulinarik. Umgeben von einem 44.000 qm großen Park, bietet es Ruhe pur. Der mehrfach ausgezeichnete Spa-Bereich und die Gourmet-Restaurants machen jeden Aufenthalt unvergesslich.',
+          service_details='Golfplatz, 4.400qm Spa, Gourmet-Restaurant, Außenpool, Tennis',
+          latitude=49.2372, longtitude=9.5283, hotel_phone='+49 7941 60870', hotel_email='hotel@schlosshotel-friedrichsruhe.de', hotel_website='https://schlosshotel-friedrichsruhe.de', hotel_street='Kärcherstraße 11, 74639 Zweiflingen'),
+      Hotel(name='Breidenbacher Hof', city='Düsseldorf', price_per_night=510, price_per_night_u1=620, price_per_night_u2=780, price_per_night_u3=1100,
+          description='Luxuriöses Grandhotel an der Königsallee.',
+          description_long='Der Breidenbacher Hof ist eine Legende der Düsseldorfer Hotellerie. Direkt an der berühmten Einkaufsmeile Königsallee gelegen, bietet er den perfekten Ausgangspunkt für Shopping und Kultur. Das Interieur verbindet klassischen Luxus mit modernem Komfort. Persönliche Assistenten auf jeder Etage sorgen für einen unvergleichlichen Service.',
+          service_details='Personal Assistants, Luxus-Shopping, Brasserie 1806, Zigarrenlounge, Pool',
+          latitude=51.2254, longtitude=6.7782, hotel_phone='+49 211 160900', hotel_email='info.breidenbacherhof@capellahotels.com', hotel_website='https://www.breidenbacherhof.com', hotel_street='Königsallee 11, 40212 Düsseldorf'),
+
+    # --- DRESDEN ---
+    Hotel(name='Hotel Taschenbergpalais Kempinski', city='Dresden', price_per_night=230, price_per_night_u1=290, price_per_night_u2=410, price_per_night_u3=650,
+          description='Barockes Palais direkt neben der Semperoper.',
+          description_long='Erleben Sie königlichen Glanz im Taschenbergpalais, das August der Starke einst für seine Geliebte erbaute. Mitten in der historischen Altstadt gelegen, sind Zwinger, Residenzschloss und Frauenkirche nur wenige Schritte entfernt. Im Winter verwandelt sich der Innenhof in eine märchenhafte Eisbahn.',
+          service_details='Historischer Innenhof, Spa-Lounge, Fischrestaurant Kastenmeiers, Bar, Concierge',
+          latitude=51.0526, longtitude=13.7360, hotel_phone='+49 351 49120', hotel_email='reservations.taschenbergpalais@kempinski.com', hotel_website='https://www.kempinski.com/dresden', hotel_street='Taschenberg 3, 01067 Dresden'),
+
+    # --- HAMBURG (Ergänzung) ---
+    Hotel(name='The Westin Hamburg', city='Hamburg', price_per_night=350, price_per_night_u1=450, price_per_night_u2=600, price_per_night_u3=900,
+          description='Einzigartiges Hotel in der Elbphilharmonie.',
+          description_long='Residieren Sie im Wahrzeichen der Stadt. Das Westin Hamburg befindet sich im oberen Teil der Elbphilharmonie und bietet durch bodentiefe Fenster spektakuläre Ausblicke auf den Hafen und die Speicherstadt. Genießen Sie die Ruhe hoch über dem Trubel und den direkten Zugang zu den Konzertsälen.',
+          service_details='Blick auf HafenCity, Spa, Restaurant The Saffron, Direkter Konzertsaal-Zugang',
+          latitude=53.5413, longtitude=9.9841, hotel_phone='+49 40 8000100', hotel_email='reservations.thewestinhamburg@marriott.com', hotel_website='https://www.marriott.com', hotel_street='Platz der Deutschen Einheit 2, 20457 Hamburg'),
+
+    # --- BERLIN (Ergänzung) ---
+    Hotel(name='Waldorf Astoria Berlin', city='Berlin', price_per_night=390, price_per_night_u1=490, price_per_night_u2=680, price_per_night_u3=1200,
+          description='Art-Déco Eleganz in der City West.',
+          description_long='Das Waldorf Astoria Berlin im Zoofenster-Hochhaus bietet Luxus pur und einen atemberaubenden Blick über den Tiergarten und die Gedächtniskirche. Das Design ist eine Hommage an die 1920er Jahre. Entspannen Sie im ersten Guerlain Spa Deutschlands oder genießen Sie den High Tea in der Library Lounge.',
+          service_details='Guerlain Spa, High Tea, Ballsaal, Valet Parking, Rooftop Suite',
+          latitude=52.5052, longtitude=13.3323, hotel_phone='+49 30 8140000', hotel_email='berlin.info@waldorfastoria.com', hotel_website='https://www.waldorfastoriaberlin.com', hotel_street='Hardenbergstraße 28, 10623 Berlin'),
+
+    # --- SYLT ---
+    Hotel(name='Budersand Hotel - Golf & Spa', city='Hörnum (Sylt)', price_per_night=580, price_per_night_u1=720, price_per_night_u2=950, price_per_night_u3=1400,
+          description='Modernes 5-Sterne-Superior Hotel am Meer.',
+          description_long='Das Budersand Hotel im Süden von Sylt verbindet eindrucksvolle Architektur mit der rauen Natur der Nordsee. Direkt am Meer gelegen, verfügt es über einen der besten Golfplätze Deutschlands. Das Interieur ist geprägt von Naturmaterialien und zeitgenössischer Kunst.',
+          service_details='Golfplatz, Spa, Bibliothek, Sternerestaurant KAI3, Meerblick',
+          latitude=54.7578, longtitude=8.2917, hotel_phone='+49 4651 46070', hotel_email='reservierung@budersand.de', hotel_website='https://www.budersand.de', hotel_street='Am Kai 3, 25997 Hörnum (Sylt)'),
+
+    # --- OSTSEE (Warnemünde) ---
+    Hotel(name='Hotel Neptun', city='Rostock-Warnemünde', price_per_night=210, price_per_night_u1=260, price_per_night_u2=340, price_per_night_u3=480,
+          description='Das Wellness-Hotel direkt am Warnemünder Strand.',
+          description_long='In bester Lage direkt am breitesten Strand der Ostsee bietet das Hotel Neptun jedem Gast Zimmer mit Meerblick. Bekannt für sein originales Thalasso-Zentrum und die Sky-Bar in 64 Metern Höhe, ist es eine Institution an der Küste. Hier erleben Sie Erholung mit der Kraft des Meeres.',
+          service_details='Alle Zimmer mit Meerblick, Thalasso-Zentrum, Sky-Bar, Diskothek, Meerwasserschwimmbad',
+          latitude=54.1794, longtitude=12.0792, hotel_phone='+49 381 7770', hotel_email='info@hotel-neptun.de', hotel_website='https://www.hotel-neptun.de', hotel_street='Seestraße 19, 18119 Rostock-Warnemünde'),
+
+    # --- HEIDELBERG ---
+    Hotel(name='Der Europäische Hof Heidelberg', city='Heidelberg', price_per_night=290, price_per_night_u1=360, price_per_night_u2=490, price_per_night_u3=750,
+          description='Privatgeführtes Luxushotel mit historischem Charme.',
+          description_long='Seit 1865 ist der Europäische Hof die erste Adresse in Heidelberg. Das familiengeführte Hotel vereint Tradition mit herzlichem Service. Umgeben von einem eigenen Garten, liegt es dennoch zentral zur berühmten Altstadt und dem Schloss. Der Wellnessbereich Panorama Spa bietet Entspannung nach der Stadtbesichtigung.',
+          service_details='Panorama Spa, Dachterrasse, Kurfürstenstube, Innenpool, Garten',
+          latitude=49.4094, longtitude=8.6946, hotel_phone='+49 6221 5150', hotel_email='reservations@europaeischerhof.com', hotel_website='https://www.europaeischerhof.com', hotel_street='Friedrich-Ebert-Anlage 1, 69117 Heidelberg'),
+
+    # --- WOLFSBURG ---
+    Hotel(name='The Ritz-Carlton', city='Wolfsburg', price_per_night=410, price_per_night_u1=530, price_per_night_u2=700, price_per_night_u3=1000,
+          description='High-End Designhotel in der Autostadt.',
+          description_long='Eingebettet in die Architektur der Autostadt Wolfsburg, bietet das Ritz-Carlton modernes Design auf höchstem Niveau. Die kreisförmige Bauweise ermöglicht spannende Ausblicke auf das Hafenbecken und das historische Kraftwerk. Kulinarisches Highlight ist das mit 3 Michelin-Sternen ausgezeichnete Restaurant Aqua.',
+          service_details='3-Sterne Restaurant Aqua, Außenpool im Hafenbecken, Spa, Autostadt-Zugang',
+          latitude=52.4314, longtitude=10.7963, hotel_phone='+49 5361 607000', hotel_email='wolfsburg.reservation@ritzcarlton.com', hotel_website='https://www.ritzcarlton.com/wolfsburg', hotel_street='Parkstraße 1, 38440 Wolfsburg'),
+
+    # --- BERCHTESGADEN ---
+    Hotel(name='Kempinski Hotel Berchtesgaden', city='Berchtesgaden', price_per_night=460, price_per_night_u1=580, price_per_night_u2=800, price_per_night_u3=1250,
+          description='Alpines Lifestyle-Resort auf 1000m Höhe.',
+          description_long='Das Kempinski Hotel Berchtesgaden liegt auf dem Obersalzberg und bietet einen spektakulären Panoramablick auf das Watzmann-Massiv. Die Architektur verbindet alpinen Charme mit klarem Design. Ideal für Wanderer im Sommer und Skifahrer im Winter, mit direktem Zugang zur Natur und einem exklusiven Spa.',
+          service_details='Activity Concierge, Beheizter Außenpool, Kaminbar, Helikopter-Landeplatz, Kids Club',
+          latitude=47.6366, longtitude=13.0425, hotel_phone='+49 8652 97550', hotel_email='reservations.berchtesgaden@kempinski.com', hotel_website='https://www.kempinski.com/berchtesgaden', hotel_street='Hintereck 1, 83471 Berchtesgaden'),
+
+    # --- HEILIGENDAMM ---
+    Hotel(name='Grand Hotel Heiligendamm', city='Bad Doberan', price_per_night=440, price_per_night_u1=560, price_per_night_u2=790, price_per_night_u3=1300,
+          description='Die Weiße Stadt am Meer.',
+          description_long='Das Grand Hotel Heiligendamm ist ein Ensemble historischer Bauten direkt an der Ostsee. Als erstes deutsches Seebad blickt es auf eine lange Tradition zurück. Die Kombination aus klassizistischer Architektur, exzellentem Spa und der direkten Strandlage macht den Aufenthalt zu einer Zeitreise in die Sommerfrische des Adels.',
+          service_details='3000qm Spa, Eigener Strandabschnitt, Sushi-Bar, Kinder-Villa, Kulturprogramm',
+          latitude=54.1438, longtitude=11.8427, hotel_phone='+49 38203 7400', hotel_email='reservations@grandhotel-heiligendamm.de', hotel_website='https://www.grandhotel-heiligendamm.de', hotel_street='Prof.-Dr.-Vogel-Str. 6, 18209 Bad Doberan-Heiligendamm'),
+
+    # --- NÜRNBERG ---
+    Hotel(name='Sheraton Carlton Hotel', city='Nürnberg', price_per_night=190, price_per_night_u1=240, price_per_night_u2=310, price_per_night_u3=450,
+          description='Elegantes Business-Hotel am Rande der Altstadt.',
+          description_long='Das Sheraton Carlton Hotel Nürnberg bietet First-Class-Komfort in zentraler Lage. Nur wenige Minuten vom Hauptbahnhof entfernt, ist es der ideale Ort für Geschäftsreisende und Touristen. Genießen Sie den Ausblick von der Dachterrasse oder entspannen Sie im Spa mit Pool in der obersten Etage.',
+          service_details='Dachterrasse, Spa mit Pool, Restaurant Tafelhof, Konferenzräume, Parkservice',
+          latitude=49.4469, longtitude=11.0825, hotel_phone='+49 911 20030', hotel_email='carlton@sheratonnuernberg.com', hotel_website='https://www.marriott.com', hotel_street='Eilgutstraße 15, 90443 Nürnberg'),
+
+    # --- LEIPZIG ---
+    Hotel(name='Steigenberger Grandhotel Handelshof', city='Leipzig', price_per_night=200, price_per_night_u1=260, price_per_night_u2=350, price_per_night_u3=500,
+          description='Luxus im historischen Messehof.',
+          description_long='Mitten in der Leipziger Innenstadt, im historischen Gebäude des ehemaligen Handelshofs, empfängt Sie dieses Grandhotel. Die Kombination aus Geschichte und Moderne prägt das Ambiente. Sehenswürdigkeiten wie die Nikolaikirche oder das Gewandhaus sind fußläufig erreichbar. Die Brasserie Le Grand verwöhnt mit französischer Küche.',
+          service_details='Spa World Premium, Brasserie, Vinothek, Lichthof, Zentral gelegen',
+          latitude=51.3403, longtitude=12.3768, hotel_phone='+49 341 3505810', hotel_email='leipzig@steigenberger.com', hotel_website='https://www.steigenberger.com', hotel_street='Salzgäßchen 6, 04109 Leipzig'),
+
+    # --- BADEN-BADEN (Alternative zu Brenners) ---
+    Hotel(name='Roomers Baden-Baden', city='Baden-Baden', price_per_night=280, price_per_night_u1=350, price_per_night_u2=480, price_per_night_u3=700,
+          description='Modernes Lifestyle-Hotel der Autograph Collection.',
+          description_long='Das Roomers in Baden-Baden ist der junge, wilde Gegenpol zu den klassischen Grandhotels der Stadt. Das Design von Piero Lissoni ist dunkel, edel und sexy. Ein Highlight ist der Rooftop-Pool mit Bar, der einen fantastischen Blick über die Stadt und den Schwarzwald bietet. Das Restaurant moriki serviert pan-asiatische Küche.',
+          service_details='Rooftop Pool & Bar, Pan-Asian Restaurant, Design-Interieur, Spa, DJ-Events',
+          latitude=48.7668, longtitude=8.2325, hotel_phone='+49 7221 901930', hotel_email='res@roomers-badenbaden.com', hotel_website='https://www.roomers-badenbaden.com', hotel_street='Lange Straße 100, 76530 Baden-Baden'),
+
+    # --- TEGERNSEE ---
+    Hotel(name='Althoff Seehotel Überfahrt', city='Rottach-Egern', price_per_night=550, price_per_night_u1=680, price_per_night_u2=900, price_per_night_u3=1400,
+          description='Elegantes Nature Resort direkt am Tegernsee.',
+          description_long='Das Seehotel Überfahrt bietet bayerische Gastlichkeit auf Weltklasse-Niveau. Direkt am Ufer des Tegernsees gelegen, besticht es durch seine Ruhe und Eleganz. Mit fünf Restaurants, darunter ein 3-Sterne-Restaurant, ist es ein kulinarischer Hotspot. Das 4 Elements Spa bietet Wellness im Einklang mit der Natur.',
+          service_details='3-Sterne Restaurant, 4 Elements Spa, Privatstrand, Kochschule, Concierge',
+          latitude=47.6937, longtitude=11.7592, hotel_phone='+49 8022 6690', hotel_email='info@seehotel-ueberfahrt.com', hotel_website='https://www.althoffcollection.com', hotel_street='Überfahrtstraße 10, 83700 Rottach-Egern'),
+
+    # --- MÜNSTER ---
+    Hotel(name='Hotel Mauritzhof', city='Münster', price_per_night=195, price_per_night_u1=230, price_per_night_u2=290, price_per_night_u3=400,
+          description='Individuelles Boutique-Hotel an der Promenade.',
+          description_long='Der Mauritzhof ist eine Institution in Münster – klein, fein und sehr persönlich. Direkt an der grünen Promenade gelegen, bietet es einen ruhigen Rückzugsort und ist doch nur wenige Schritte vom Prinzipalmarkt entfernt. Das Design ist zeitlos elegant, die Atmosphäre familiär und entspannt.',
+          service_details='Lounge Bar, Terrasse, Promenade-Lage, Design-Zimmer, Frühstück à la carte',
+          latitude=51.9602, longtitude=7.6338, hotel_phone='+49 251 41720', hotel_email='info@mauritzhof.de', hotel_website='https://www.mauritzhof.de', hotel_street='Eisenbahnstraße 17, 48143 Münster'),
+    
+    # --- RÜGEN ---
+    Hotel(name='Grand Hotel Binz', city='Binz', price_per_night=240, price_per_night_u1=300, price_per_night_u2=420, price_per_night_u3=600,
+          description='Luxus und Bäderarchitektur auf Rügen.',
+          description_long='Das Grand Hotel Binz liegt am ruhigsten Teil der Strandpromenade des berühmten Ostseebads. Es verbindet den Charme der klassischen Bäderarchitektur mit modernem 5-Sterne-Komfort. Besonders beliebt ist das Thai-Bali-Spa, das asiatische Heilkunst an die Ostsee bringt.',
+          service_details='Thai-Bali-Spa, Ruhige Lage, Gourmet-Restaurant, Strandnah, Balkone',
+          latitude=54.4022, longtitude=13.6190, hotel_phone='+49 38393 500', hotel_email='reservierung@grandhotelbinz.com', hotel_website='https://www.grandhotelbinz.com', hotel_street='Strandpromenade 7, 18609 Ostseebad Binz'),
+
+    # --- KÖLN (Ergänzung) ---
+    Hotel(name='Wasserturm Hotel Cologne', city='Köln', price_per_night=170, price_per_night_u1=220, price_per_night_u2=300, price_per_night_u3=450,
+          description='Einzigartiges Hotel im historischen Wasserturm.',
+          description_long='Übernachten Sie in einem der außergewöhnlichsten Gebäude Kölns. Der ehemalige Wasserturm beherbergt heute ein Luxushotel der Curio Collection by Hilton. Die runde Architektur sorgt für besondere Zimmergrundrisse. Absolutes Highlight ist die 360-Grad-Dachterrasse mit Blick auf den Kölner Dom.',
+          service_details='Rooftop Bar, 360-Grad-Blick, Denkmalgeschütztes Gebäude, Fitness, Zentral',
+          latitude=50.9298, longtitude=6.9547, hotel_phone='+49 221 20080', hotel_email='info@wasserturm-hotel-cologne.de', hotel_website='https://www.hilton.com', hotel_street='Kaygasse 2, 50676 Köln'),
+
+    # --- HANNOVER ---
+    Hotel(name='Kastens Hotel Luisenhof', city='Hannover', price_per_night=185, price_per_night_u1=235, price_per_night_u2=295, price_per_night_u3=410,
+          description='Hannovers führendes 5-Sterne-Superior Hotel.',
+          description_long='Mitten in Hannover, unweit der Oper und des Hauptbahnhofs, liegt der Luisenhof. Seit über 160 Jahren steht das Haus für Diskretion und erstklassigen Service. Die klassisch-eleganten Zimmer und das Restaurant MARY\'s ziehen internationale Gäste und Messebesucher gleichermaßen an.',
+          service_details='Gourmet-Restaurant, Fitness & Sauna, Valet Parking, Weinkeller, Concierge',
+          latitude=52.3742, longtitude=9.7408, hotel_phone='+49 511 30440', hotel_email='info@kastens-luisenhof.de', hotel_website='https://www.kastens-luisenhof.de', hotel_street='Luisenstraße 1-3, 30159 Hannover'),
+
+    # --- ERFURT ---
+    Hotel(name='Hotel Zumnorde', city='Erfurt', price_per_night=160, price_per_night_u1=195, price_per_night_u2=250, price_per_night_u3=350,
+          description='Traditionshaus am Anger im Herzen Erfurts.',
+          description_long='Das Hotel Zumnorde am Anger ist eines der schönsten Hotels in Thüringen. Hinter der historischen Fassade verbirgt sich ein stilvolles Interieur, das Wohnkultur zelebriert. Der Dachgarten und der mittelalterliche Innenhof sind Oasen der Ruhe mitten in der belebten Innenstadt.',
+          service_details='Restaurant, Weinhandel, Dachgarten, Sauna, Familiengeführt',
+          latitude=50.9768, longtitude=11.0345, hotel_phone='+49 361 56800', hotel_email='anger@hotel-zumnorde.de', hotel_website='https://www.hotel-zumnorde.de', hotel_street='Anger 50-51, 99084 Erfurt'),
+
+    # --- FREIBURG ---
+    Hotel(name='Colombi Hotel', city='Freiburg im Breisgau', price_per_night=230, price_per_night_u1=290, price_per_night_u2=380, price_per_night_u3=550,
+          description='Das Grandhotel am Rande der Freiburger Altstadt.',
+          description_long='Das Colombi Hotel in Freiburg ist eine Institution im Schwarzwald. Direkt gegenüber dem Colombi-Park gelegen, bietet es luxuriöses Wohnen und eine vielfach ausgezeichnete Küche in der Zirbelstube. Es ist der perfekte Ausgangspunkt für Ausflüge in den Schwarzwald oder das Elsass.',
+          service_details='Michelin-Stern Restaurant, Hallenbad, Fitness, Piano-Bar, Weinkeller',
+          latitude=47.9975, longtitude=7.8478, hotel_phone='+49 761 21060', hotel_email='info@colombi.de', hotel_website='https://www.colombi.de', hotel_street='Rotteckring 16, 79098 Freiburg im Breisgau'),             
+
                   Hotel(name='Steigenberger Icon Frankfurter Hof', city='Frankfurt am Main', price_per_night=290, price_per_night_u1=365, price_per_night_u2=495, price_per_night_u3=750, description='Historisches Grandhotel im Bankenviertel.', description_long='Mitten im Herzen der Mainmetropole empfängt Sie unser historisches Haus mit prachtvollem Ambiente und modernem Komfort. Nur wenige Schritte vom Kaiserplatz und dem Bankenviertel entfernt, ist unser Hotel der ideale Ausgangspunkt für geschäftliche Termine oder ausgedehnte Shoppingtouren auf der Zeil. Entspannen Sie in unserem exklusiven Spa-Bereich oder lassen Sie den Abend in unserer mehrfach ausgezeichneten Bar ausklingen. Wir bieten Ihnen Gastfreundschaft auf höchstem Niveau in einer Atmosphäre, die Geschichte und Moderne perfekt vereint.', service_details='Kostenloses WLAN, Großes Spa & Wellnesscenter, 24-Stunden-Rezeption, Zimmerservice, Außenterrasse', latitude=50.1104, longtitude=8.6744, hotel_phone='+49 69 21500', hotel_email='reservations@frankfurter-hof.steigenberger.de', hotel_website='https://www.steigenberger.com', hotel_street='Am Kaiserplatz, 60311 Frankfurt am Main'),
                   Hotel(name='Taschenbergpalais Kempinski', city='Dresden', price_per_night=230, price_per_night_u1=295, price_per_night_u2=410, price_per_night_u3=620, description='Barocker Glanz im Herzen Dresdens.', description_long='Erleben Sie königlichen Luxus in einem liebevoll restaurierten Palais, das August der Starke einst für seine Mätresse erbaute. Direkt neben der Semperoper, dem Zwinger und dem Residenzschloss gelegen, bietet unser Hotel den perfekten Rahmen für Ihren Aufenthalt in Elbflorenz. Die großzügigen Zimmer bestechen durch klassisches Design und höchsten Komfort. Im Winter verwandelt sich unser Innenhof in eine märchenhafte Eisbahn. Lassen Sie sich von sächsischer Herzlichkeit und internationalem Standard verwöhnen.', service_details='Kostenloses WLAN, Pool & Sauna, 24-Stunden-Rezeption, Café Vestibül, Limousinenservice', latitude=51.0526, longtitude=13.7344, hotel_phone='+49 351 49120', hotel_email='reservations.taschenbergpalais@kempinski.com', hotel_website='https://www.kempinski.com/dresden', hotel_street='Taschenberg 3, 01067 Dresden'),
                   Hotel(name='Breidenbacher Hof', city='Düsseldorf', price_per_night=450, price_per_night_u1=580, price_per_night_u2=790, price_per_night_u3=1100, description='Exklusivität an der Königsallee.', description_long='Willkommen im Wohnzimmer von Düsseldorf. Unser Hotel an der berühmten Königsallee setzt Maßstäbe in Sachen Luxus und persönlichem Service. Die eleganten Zimmer und Suiten verbinden klassische Stilelemente mit modernster Technik. Dank unserer "Personal Assistants" bleibt kein Wunsch unerfüllt. Genießen Sie direkten Zugang zu exklusiven Boutiquen oder entspannen Sie in unserer privaten Klinik-Etage für Medical Wellness. Ob Shopping, Kunst oder Business – hier residieren Sie an der ersten Adresse der Stadt.', service_details='Kostenloses WLAN, Private Butler, 24-Stunden-Rezeption, Zimmerservice, Zigarren-Lounge', latitude=51.2247, longtitude=6.7778, hotel_phone='+49 211 16090', hotel_email='info.breidenbacherhof@capellahotels.com', hotel_website='https://www.capellahotels.com/dusseldorf', hotel_street='Königsallee 11, 40212 Düsseldorf'),

@@ -63,8 +63,6 @@ def parse_date_flexible(date_string):
 @views.route('/booking/<int:hotel_id>/step2', methods=['GET', 'POST']) 
 def booking_step2(hotel_id):
     hotel = Hotel.query.get_or_404(hotel_id)
-    
-    # Sicherheitscheck ob daten in Session enthalten sind aus step 1 
     if 'booking_data' not in session:
         flash("Bitte starte die Buchung von vorne.", "warning")
         return redirect(url_for('views.booking_step1', hotel_id=hotel_id))

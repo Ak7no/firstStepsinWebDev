@@ -160,7 +160,6 @@
         display: none !important;
     }
 
-    /* Setze Hintergründe auf Weiß und Text auf Schwarz für Tinte-Sparen */
     body, 
     .content-wrapper {
         background: white !important;
@@ -170,7 +169,6 @@
         height: auto !important;
     }
 
-    /* Die Box soll flach sein, ohne Schatten */
     .confirmation-box, 
     .main-container-box {
         box-shadow: none !important;
@@ -179,10 +177,9 @@
         max-width: 100% !important;
         margin: 0 !important;
         padding: 20px !important;
-        position: static !important; /* Wichtig damit es nicht schwebt */
+        position: static !important; 
     }
 
-    /* Optional: Füge ein Logo oder Text hinzu, der nur im Druck sichtbar ist */
     .confirmation-box::before {
         content: "Buchungsbestätigung - First Steps Hotel";
         display: block;

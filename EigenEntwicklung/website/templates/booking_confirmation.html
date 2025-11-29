@@ -3,15 +3,12 @@
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style_booking_confirmation.css') }}">
 
-<!-- Video Hintergrund -->
 <div class="video-bg-container">
     <video autoplay muted loop playsinline>
         <source src="{{ url_for('static', filename='primVid.mp4') }}" type="video/mp4">
     </video>
     <div class="video-bg-overlay"></div>
 </div>
-
-<!-- Content über dem Video -->
 <div class="content-wrapper">
     <div class="confirmation-box">
         <h1>✅ Buchungsbestätigung</h1>
@@ -28,7 +25,6 @@
         <button onclick="window.print()" class="btn btn-secondary btn-lg mr-2">
             🖨️ Als PDF speichern / Drucken
         </button>
-
         <a href="/" class="btn btn-primary btn-lg">
             🏨 Zur Startseite
         </a>

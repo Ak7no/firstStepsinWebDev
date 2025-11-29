@@ -2,35 +2,26 @@
 {% block title %}Buchung überprüfen{% endblock %}
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style_booking_review.css') }}">
-
-<!-- Video Hintergrund -->
 <div class="video-bg-container">
     <video autoplay muted loop playsinline>
         <source src="{{ url_for('static', filename='primVid.mp4') }}" type="video/mp4">
     </video>
     <div class="video-bg-overlay"></div>
 </div>
-
-<!-- Content über dem Video -->
 <div class="content-wrapper">
     <div class="container mt-4">
+
         <div class="main-container-box">
             <h1>Buchung für {{ hotel.name }}</h1>
-
-            <!-- PROGRESS BAR -->
             <div class="progress-wrapper">
                 <span class="progress-text">Schritt 3 von 3</span>
                 <div class="progress flex-grow-1">
                     <div class="progress-bar bg-success" role="progressbar" style="width: 100%"></div>
                 </div>
             </div>
-
-            <!-- FORM START -->
             <form method="POST" action="{{ url_for('views.booking_review', hotel_id=hotel.id) }}">
                 <div class="row">
-                    <!-- Linke Spalte: Buchungsübersicht + Zahlungsinformationen -->
                     <div class="col-md-8">
-                        <!-- Buchungsübersicht -->
                         <div class="card mb-4">
                             <div class="card-header">
                                 <h4>Buchungsübersicht</h4>
@@ -63,22 +54,15 @@
                                 {% endif %}
                             </div>
                         </div>
-
-                        <!-- Zahlungsinformationen -->
                         <div class="card">
                             <div class="card-header">
                                 <h4>Zahlungsinformationen</h4>
                             </div>
                             <div class="card-input-group">
-                                <!-- Karteninhaber -->
                                 <input type="text" name="cardholder" class="form-input" placeholder="Karteninhaber"
                                     required>
-
-                                <!-- Kartennummer -->
                                 <input type="text" name="card_number" class="form-input"
                                     placeholder="Kartennummer (z.B. 4242 4242 4242 4242)" maxlength="19" required>
-
-                                <!-- Expiry und CVV nebeneinander -->
                                 <div class="form-row">
                                     <input type="text" name="expiry" class="form-input" placeholder="MM/YY"
                                         maxlength="5" required>
@@ -89,8 +73,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Rechte Spalte: Hinweis -->
                     <div class="col-md-4">
                         <div class="card">
                             <div class="card-header">
@@ -104,15 +86,12 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Buttons -->
                 <div class="btn-group">
                     <a href="{{ url_for('views.booking_step1', hotel_id=hotel.id) }}" class="btn btn-secondary">« Zurück
                         bearbeiten</a>
                     <button type="submit" class="btn btn-success">Jetzt verbindlich buchen</button>
                 </div>
             </form>
-            <!-- FORM END -->
         </div>
     </div>
 </div>

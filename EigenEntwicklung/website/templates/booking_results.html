@@ -2,16 +2,12 @@
 {% block title %}Suchergebnisse{% endblock %}
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style_booking_results.css') }}">
-
-<!-- Video Hintergrund -->
 <div class="video-bg-container">
     <video autoplay muted loop playsinline>
         <source src="{{ url_for('static', filename='primVid.mp4') }}" type="video/mp4">
     </video>
     <div class="video-bg-overlay"></div>
 </div>
-
-<!-- Content über dem Video -->
 <div class="content-wrapper">
     <div class="container">
         <div class="page-title text-center">
@@ -28,7 +24,6 @@
                 <a href="{{ url_for('views.booking_detail', hotel_id=hotel.id) }}" class="hotel-card rounded p-3">
                     <div class="d-flex justify-content-between align-items-start mb-2">
                         <h5 class="mb-0 text-dark">{{ hotel.name }}</h5>
-                        <!--span class="badge bg-primary">{{ hotel.city }}</span-->
                     </div>
 
                     <p class="text-muted mb-3">

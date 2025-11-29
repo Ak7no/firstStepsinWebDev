@@ -2,44 +2,39 @@
 {% block title %}Buchung - {{ hotel.name }}{% endblock %}
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style_booking_step1.css') }}">
-<!-- Litepicker CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css">
 
-<!-- Video Hintergrund -->
+<div id="booking-config" 
+     data-price-standard="{{ hotel.price_per_night }}"
+     data-price-deluxe="{{ hotel.price_per_night_u1 }}"
+     data-price-family="{{ hotel.price_per_night_u2 }}"
+     data-price-premium="{{ hotel.price_per_night_u3 }}"
+     style="display:none;">
+</div>
 <div class="video-bg-container">
   <video autoplay muted loop playsinline>
     <source src="{{ url_for('static', filename='primVid.mp4') }}" type="video/mp4">
   </video>
   <div class="video-bg-overlay"></div>
 </div>
-
-<!-- Content über dem Video -->
 <div class="content-wrapper">
   <div class="container">
-    <!--Main Box-->
     <div class="main-container-box">
       <h1>Buchung für {{ hotel.name }}</h1>
-
-      <!--Fortschrittsleiste-->
       <div class="progress-wrapper">
         <span class="progress-text">Schritt 1 von 3</span>
         <div class="progress flex-grow-1">
           <div class="progress-bar bg-success" role="progressbar" style="width: 33.33%"></div>
         </div>
       </div>
-
       <div class="row">
-        <!--Hauptformular -->
         <div class="col-md-8">
-          <!-- Buchungsformular -->
           <div class="card">
             <div class="card-header">
               <h5 class="mb-0"><strong>Schritt 1: Reisedaten wählen</strong></h5>
             </div>
             <div class="card-body">
               <form method="POST" action="{{ url_for('views.booking_step1', hotel_id=hotel.id) }}">
-
-                <!--Anreise und Abreise Datum Auswahl mit Litepicker-->
                 <div class="form-group">
                   <h6 for="checkin">Reisezeitraum</h6>
                   <div class="date-range-container">
@@ -52,40 +47,34 @@
                   <small class="text-muted">Klicken Sie auf das Anreisedatum um den Zeitraum zu wählen</small>
                 </div>
                 <hr>
-                <!--Gäste Anzahl Auswahl-->
                 <div class="form-group">
                   <h5><strong>Anzahl Gäste</strong></h5>
                   <div class="guests-container">
-                    <!-- Erwachsene -->
                     <div class="guest-section">
                       <label>Erwachsene</label>
                       <div class="guest-input-group">
-                        <button type="button" class="guest-btn" onclick="updateGuest('num_adults', -1)">−</button>
+                        <button type="button" class="guest-btn" data-target="num_adults" data-change="-1">−</button>
                         <span class="guest-count" id="adults-count">2</span>
-                        <button type="button" class="guest-btn" onclick="updateGuest('num_adults', 1)">+</button>
+                        <button type="button" class="guest-btn" data-target="num_adults" data-change="1">+</button>
                         <input type="hidden" id="num_adults" name="num_adults" value="2">
                       </div>
                     </div>
-
-                    <!-- Kinder -->
                     <div class="guest-section">
                       <label>Kinder</label>
                       <div class="guest-input-group">
-                        <button type="button" class="guest-btn" onclick="updateGuest('num_children', -1)">−</button>
+                        <button type="button" class="guest-btn" data-target="num_children" data-change="-1">−</button>
                         <span class="guest-count" id="children-count">0</span>
-                        <button type="button" class="guest-btn" onclick="updateGuest('num_children', 1)">+</button>
+                        <button type="button" class="guest-btn" data-target="num_children" data-change="1">+</button>
                         <input type="hidden" id="num_children" name="num_children" value="0">
                       </div>
                     </div>
                   </div>
                 </div>
                 <hr>
-                <!--Zimmerauswahl-->
                 <div class="form-group">
                   <h5><strong>Zimmertyp wählen</strong></h5>
                   <div class="rooms-container">
-                    <!-- Zimmer 1 -->
-                    <label class="room-card" onclick="selectRoom(this, 'standard', 120)">
+                    <label class="room-card">
                       <input type="radio" name="room_type" value="standard" class="room-input" required>
                       <h6>Standard Zimmer</h6>
                       <div class="room-price">{{hotel.price_per_night}}€ p.P</div>
@@ -94,9 +83,7 @@
                         <div>📺 TV, WLAN</div>
                       </div>
                     </label>
-
-                    <!-- Zimmer 2 -->
-                    <label class="room-card" onclick="selectRoom(this, 'deluxe', 180)">
+                    <label class="room-card">
                       <input type="radio" name="room_type" value="deluxe" class="room-input" required>
                       <h6>Deluxe Zimmer</h6>
                       <div class="room-price">{{hotel.price_per_night_u1}}€ p.P</div>
@@ -105,9 +92,7 @@
                         <div>🛁 Badewanne, Minibar</div>
                       </div>
                     </label>
-
-                    <!-- Zimmer 3 -->
-                    <label class="room-card" onclick="selectRoom(this, 'family', 250)">
+                    <label class="room-card">
                       <input type="radio" name="room_type" value="family" class="room-input" required>
                       <h6>Family Suite</h6>
                       <div class="room-price">{{hotel.price_per_night_u2}}€ p.P</div>
@@ -116,9 +101,7 @@
                         <div>🛏️ 2 Schlafzimmer</div>
                       </div>
                     </label>
-
-                    <!-- Zimmer 4 -->
-                    <label class="room-card" onclick="selectRoom(this, 'premium', 350)">
+                    <label class="room-card">
                       <input type="radio" name="room_type" value="premium" class="room-input" required>
                       <h6>Premium Suite</h6>
                       <div class="room-price">{{hotel.price_per_night_u3}}€ p.P</div>
@@ -130,7 +113,6 @@
                   </div>
                 </div>
                 <hr>
-                <!--Navigationsbuttons-->
                 <div class="d-flex justify-content-between">
                   <a href="{{ url_for('views.booking_detail', hotel_id=hotel.id) }}" class="btn btn-secondary">
                     « Zurück zur Übersicht
@@ -144,8 +126,6 @@
             </div>
           </div>
         </div>
-
-        <!-- RECHTE SEITE: Buchungsübersicht -->
         <div class="col-md-4">
           <div class="card">
             <div class="card-header">
@@ -156,20 +136,16 @@
               <p><strong>Ort:</strong> {{ hotel.city }}</p>
               <p><strong>Adresse:</strong> {{hotel.hotel_street}}</p>
               <p><strong>Preis:</strong> <span id="total_price">0,00€</span></p>
-              <!--hr-->
             </div>
           </div>
-          <!-- Zusätzliche Info-Box -->
           <div class="card">
             <div class="card-header">
               <h6 class="mb-0">Ihre Vorteile</h6>
             </div>
             <div class="card-body">
-
               <li>✅ Kostenlose Stornierung bis 24h vor Anreise</li>
               <li>✅ Sichere Zahlung nach PCI DSS </li>
               <li>✅ Sofortige Bestätigung der Buchung</li>
-              </ul>
             </div>
           </div>
           <div class="card mt-3">
@@ -193,105 +169,7 @@
     </div>
   </div>
 </div>
-
-<!-- Date Range Picker Script -->
-
 <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
-<script>
-  const roomPrices = {
-    'standard': parseFloat('{{ hotel.price_per_night }}'),
-    'deluxe': parseFloat('{{ hotel.price_per_night_u1 }}'),
-    'family': parseFloat('{{ hotel.price_per_night_u2 }}'),
-    'premium': parseFloat('{{ hotel.price_per_night_u3 }}')
-  };
+<script src="{{ url_for('static', filename='script/booking_step1.js') }}"></script>
 
-  function calculatePrice() {
-    const selectedRoom = document.querySelector('input[name="room_type"]:checked');
-    const numAdults = parseInt(document.getElementById('num_adults').value) || 0;
-    const numChildren = parseInt(document.getElementById('num_children').value) || 0;
-    const checkinInput = document.getElementById('checkin').value;
-    const checkoutInput = document.getElementById('checkout').value;
-
-    if (!selectedRoom || !checkinInput || !checkoutInput) {
-      document.getElementById('total_price').textContent = '0,00€';
-      return;
-    }
-
-    const checkin = new Date(checkinInput.split('.').reverse().join('-'));
-    const checkout = new Date(checkoutInput.split('.').reverse().join('-'));
-    const nights = Math.ceil((checkout - checkin) / (1000 * 60 * 60 * 24));
-
-    if (nights <= 0) {
-      document.getElementById('total_price').textContent = '0,00€';
-      return;
-    }
-
-    const pricePerPerson = roomPrices[selectedRoom.value] || 0;
-    const totalGuests = numAdults + numChildren;
-    const pricePerAdult = pricePerPerson * numAdults;
-    const pricePerChild = (pricePerPerson * 0.5) * numChildren; 
-    const totalPrice = (nights * (pricePerAdult + pricePerChild));
-    document.getElementById('total_price').textContent = totalPrice.toFixed(2) + '€';
-    document.getElementById('total_price_input').value = totalPrice.toFixed(2); 
-  }
-
-  function updateGuest(inputId, change) {
-    const input = document.getElementById(inputId);
-    let value = parseInt(input.value) + change;
-    value = inputId === 'num_adults' ? Math.max(1, Math.min(8, value)) : Math.max(0, Math.min(6, value));
-    input.value = value;
-    document.getElementById(inputId.replace('num_', '') + '-count').textContent = value;
-    calculatePrice();
-  }
-
-  function selectRoom(element, roomType, price) {
-    document.querySelectorAll('.room-card').forEach(card => card.classList.remove('selected'));
-    element.classList.add('selected');
-    element.querySelector('input[type="radio"]').checked = true;
-    calculatePrice();
-  }
-
-  document.addEventListener('DOMContentLoaded', function () {
-    const picker = new Litepicker({
-      element: document.getElementById('checkin'),
-      elementEnd: document.getElementById('checkout'),
-      singleMode: false,
-      numberOfMonths: 2,
-      numberOfColumns: 2,
-      minDate: new Date(),
-      format: 'DD.MM.YYYY',
-      lang: 'de-DE',
-      tooltipText: {
-        one: 'Nacht',
-        other: 'Nächte'
-      },
-      tooltipNumber: (totalDays) => {
-        return totalDays - 1;
-      },
-      buttonText: {
-        apply: 'Übernehmen',
-        cancel: 'Abbrechen',
-        previousMonth: '← Vorheriger Monat',
-        nextMonth: 'Nächster Monat →',
-        reset: 'Zurücksetzen'
-      },
-      dropdowns: {
-        minYear: new Date().getFullYear(),
-        maxYear: new Date().getFullYear() + 4,
-        months: true,
-        years: true
-      },
-      setup: (picker) => {
-        picker.on('selected', (date1, date2) => {
-          if (date1 && date2 && date1.getTime() === date2.getTime()) {
-            alert('Abreise muss nach der Anreise sein!');
-            picker.clearSelection();
-          } else {
-            calculatePrice();
-          }
-        });
-      }
-    });
-  });
-</script>
 {% endblock %}

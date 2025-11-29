@@ -1,4 +1,4 @@
-from . import db #. uses the current package
+from . import db
 from datetime import date, datetime
 from flask_sqlalchemy import SQLAlchemy
 

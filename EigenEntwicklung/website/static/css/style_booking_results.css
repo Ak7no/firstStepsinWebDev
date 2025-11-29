@@ -1,6 +1,4 @@
-/* Spezifisch für Suchergebnisse */
 .content-wrapper {
-    /* Spezifisches Padding für Results, überschreibt main.css leicht falls nötig */
     padding-top: 2rem;
     padding-bottom: 2rem;
 }

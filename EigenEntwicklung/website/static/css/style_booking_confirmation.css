@@ -1,6 +1,4 @@
-/* Spezifisch für Bestätigungsseite */
 .content-wrapper {
-    /* Zentriert die Confirmation Box spezifisch */
     align-items: center;
     justify-content: center;
 }

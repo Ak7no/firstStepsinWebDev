@@ -4,22 +4,17 @@
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style_booking_step2.css') }}">
 
-<!-- Video Hintergrund -->
 <div class="video-bg-container">
   <video autoplay muted loop playsinline>
     <source src="{{ url_for('static', filename='primVid.mp4') }}" type="video/mp4">
   </video>
   <div class="video-bg-overlay"></div>
 </div>
-
-<!-- Content über dem Video -->
 <div class="content-wrapper">
   <div class="container mt-4">
 
     <div class="main-container-box">
       <h1>Buchung für {{ hotel.name }}</h1>
-
-      <!-- ✅ PROGRESS BAR - IDENTISCH WIE IN STEP 1 -->
       <div class="progress-wrapper">
         <span class="progress-text">Schritt 2 von 3</span>
         <div class="progress flex-grow-1">
@@ -28,20 +23,16 @@
       </div>
 
       <div class="row">
-        <!--Hauptformular -->
         <div class="col-md-8">
-          <!-- Buchungsformular -->
           <div class="card">
             <div class="card-header">
               <h5 class="mb-0"><strong>Schritt 2: Gästeinformationen und Sonderwünsche</strong></h5>
             </div>
             <div class="card-body">
               <form method="POST" action="{{ url_for('views.booking_step2', hotel_id=hotel.id) }}">
-
                 {% for i in range(num_guests) %}
                 <div class="guest-section">
                   <h6>Gast {{ i + 1 }}</h6>
-
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
@@ -58,7 +49,6 @@
                       </div>
                     </div>
                   </div>
-
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
@@ -75,7 +65,6 @@
                       </div>
                     </div>
                   </div>
-
                   <div class="form-group">
                     <label for="birthdate_{{ i }}">Geburtsdatum</label>
                     <input type="date" id="birthdate_{{ i }}" name="birthdate_{{ i }}" class="form-control" required>
@@ -83,17 +72,13 @@
                   </div>
                 </div>
                 {% endfor %}
-
                 <hr>
-
                 <div class="form-group">
                   <label for="special_requests">Spezielle Wünsche (optional)</label>
                   <textarea id="special_requests" name="special_requests" class="form-control" rows="4"
                     placeholder="z.B. Zimmer mit Seeblick, Hochbett, etc."></textarea>
                 </div>
-
                 <hr>
-
                 <div class="d-flex justify-content-between">
                   <a href="{{ url_for('views.booking_step1', hotel_id=hotel.id) }}" class="btn btn-secondary">
                     « Zurück zu Schritt 1
@@ -106,7 +91,6 @@
             </div>
           </div>
         </div>
-
         <div class="col-md-4">
           <div class="card">
             <div class="card-header">
@@ -119,8 +103,6 @@
               <p><strong>Abreise:</strong> {{ checkout }}</p>
               <p><strong>Gäste:</strong> {{ num_guests }}</p>
               <hr>
-
-              <!-- ✅ PREIS AUS SESSION -->
               {% if session.get('booking_data') %}
               <p><strong>Gesamtpreis:</strong>
                 <span class="text" style="font-size: 1.1em; font-weight: bold;">
@@ -130,10 +112,7 @@
               {% else %}
               <p class="text-muted">Preis wird berechnet...</p>
               {% endif %}
-
-
             </div>
-
           </div>
           <div class="card mt-3">
             <div class="card-header">
@@ -152,7 +131,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>

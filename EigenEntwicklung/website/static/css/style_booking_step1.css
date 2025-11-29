@@ -1,11 +1,8 @@
-/* Spezifisch für Booking Step 1 */
-
 .alert {
     background: rgba(255, 255, 255, 0.95);
     border-left: 4px solid #17a2b8;
 }
 
-/* Datumsfelder für Litepicker */
 .form-control[type="text"] {
     padding: 10px 12px;
     font-size: 16px;
@@ -24,7 +21,6 @@
     display: block;
 }
 
-/* Litepicker Styling Override */
 .litepicker {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     z-index: 1000;
@@ -40,7 +36,6 @@
     background-color: rgba(40, 167, 69, 0.2) !important;
 }
 
-/* Date Range Container */
 .date-range-container {
     display: flex;
     gap: 10px;
@@ -57,7 +52,6 @@
     padding: 0 5px;
 }
 
-/* Gäste Auswahl */
 .guests-container {
     display: flex;
     gap: 30px;
@@ -116,7 +110,6 @@
     font-size: 16px;
 }
 
-/* Zimmer Grid 2x2 */
 .rooms-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
